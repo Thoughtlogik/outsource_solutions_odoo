@@ -1,0 +1,380 @@
+/* .container{
+        max-width: 100%;
+} */
+.sales_form_details{
+    margin-top: 15px;
+    background: #FFFFFF;
+    border: 1px solid #000;
+}
+
+.form_details{
+	display: flex;
+    height: 400px;
+}
+.cust_name{
+	margin-left: 20px;
+    margin-top: 80px;
+        cursor: pointer;
+}
+.cust_description{
+	margin-left: 20px;
+    margin-top: 50px;
+        cursor: pointer;
+}
+.given_cust{
+	margin-left: 50px;
+    width: 265px;
+        cursor: pointer;
+}
+/* Additional styles for the test result input field */
+.test_result {
+    margin-top: 10px;
+    margin-left: 25px;
+     padding-top: 10px;
+}
+.batch_number{
+margin-top: 10px;
+    margin-left: 25px;
+     padding-top: 10px;
+}
+.test_result{
+margin-top: 10px;
+    margin-left: 25px;
+     padding-top: 10px;
+}
+.test_result_input{
+margin-top: 10px;
+    margin-left: 25px;
+     padding-top: 10px;
+}
+.production_date{
+margin-top: 10px;
+    margin-left: 25px;
+     padding-top: 10px;
+}
+.batch_number_input{
+margin-left: 60px;
+    width: 265px;
+        cursor: pointer;
+}
+.test_des{
+margin-left: 40px;
+    width: 265px;
+        cursor: pointer;
+}
+.batch_number_input_new{
+margin-left: 40px;
+    width: 265px;
+        cursor: pointer;
+}
+.production_date_input{
+margin-left: 40px;
+    width: 265px;
+        cursor: pointer;
+}
+
+.test_input {
+    /*width: 250px; *//* Adjust the width of the input field *//*
+    margin-left: 80px;
+    padding-top: 10px;*/
+    margin-left: 80px;
+    width: 265px;
+        cursor: pointer;
+}
+.expiration{
+    margin-top: 80px;
+        cursor: pointer;
+}
+.Analysis_Request_Date{
+    margin-top: 80px;
+        cursor: pointer;
+}
+.expiration_date{
+    margin-left: 40px;
+    width: 230px;
+        cursor: pointer;
+}
+.Analysis_Request_Date_input{
+    margin-left: 40px;
+    width: 230px;
+        cursor: pointer;
+}
+.cust_description_css{
+ margin-left: 20px;
+    width: 230px;
+        cursor: pointer;
+}
+.quotation_date{
+    margin-left: 8px;
+     width: 230px;
+         cursor: pointer;
+}
+.requested_by_input{
+    margin-left: 8px;
+     width: 230px;
+         cursor: pointer;
+}
+.collection_delivery_input{
+    margin-left: 8px;
+     width: 230px;
+         cursor: pointer;
+}
+.use_by_date_input{
+    margin-left: 8px;
+     width: 230px;
+         cursor: pointer;
+}
+
+.quotation{
+    margin-top: 25px;
+        cursor: pointer;
+}
+.requested_by{
+    margin-top: 25px;
+        cursor: pointer;
+}
+.collection_delivery{
+    margin-top: 25px;
+        cursor: pointer;
+}
+.price{
+margin-top: 25px;
+    cursor: pointer;
+}
+.test_parameter_7{
+margin-top: 25px;
+    cursor: pointer;
+}
+.product_uom_id{
+    height: 38px;
+    width: 100px;
+        cursor: pointer;
+}
+.pymnt_term{
+margin-top: 25px;
+width: 230px;
+margin-left: 145px;
+    cursor: pointer;
+}
+.analytic_account {
+	margin-left: 51px;
+    margin-top: 25px;
+        width: 230px;
+            cursor: pointer;
+}
+.price_list{
+margin-left: 125px;
+ width: 230px;
+     cursor: pointer;
+}
+.price_list_des{
+margin-left: 110px;
+ width: 230px;
+     cursor: pointer;
+}
+.test_parameter_7_input{
+margin-left: 75px;
+ width: 230px;
+     cursor: pointer;
+}
+.test_parameter_10_input{
+margin-left: 65px;
+ width: 230px;
+     cursor: pointer;
+}
+.payment_term{
+    margin-left: 68px;
+     width: 230px;
+         cursor: pointer;
+}
+.children_tax_ids{
+	height: 39px;
+    width: 85px;
+        cursor: pointer;
+}
+.save{
+	width: 1643px;
+    height: 67px;
+    background-color: #eee;
+    border: 1px solid #dee2e6;
+}
+.success{
+	margin-left: 601px;
+    color: forestgreen;
+    margin-top: 12px;
+}
+
+.status{
+	    width: 1643px;
+    height: 50px;
+   
+    border: 1px solid #dee2e6;
+}
+
+.save_btn{
+ position: absolute;
+    width: 68px;
+    height: 37px;
+    left: 32px;
+    top: 69px;
+    background: #0D9CAD;
+    padding-top: 6px;
+    padding-left: 16px;
+        cursor: pointer;
+}
+.discard_btn{
+	 position: absolute;
+    width: 79px;
+    height: 37px;
+    left: 115px;
+    top: 69px;
+   /*  background: #0D9CAD; */
+    padding-top: 6px;
+    padding-left: 10px;
+    border: 1px solid  #d9d9d9;
+        cursor: pointer;
+}
+.sent_email{
+      position: absolute;
+    width: 136px;
+    height: 37px;
+    left: 31px;
+    top: 129px;
+    background: #0D9CAD;
+    padding-left: 19px;
+    padding-top: 6px;
+
+}
+.create_btn{
+	     position: absolute;
+    width: 100px;
+    height: 37px;
+    left: 180px;
+     top: 129px;
+  /*   background: #0D9CAD; */
+    padding-left: 25px;
+    padding-top: 6px;
+     border: 1px solid  #d9d9d9;
+}
+
+
+
+
+.rwd-table {
+  margin: auto;
+  
+  border-collapse: collapse;
+      overflow: hidden;
+    width: -webkit-fill-available;
+}
+
+.rwd-table tr:first-child {
+  border-top: none;
+/*   background: #428bca;
+ */  /*color: #fff;*/
+}
+
+.rwd-table tr {
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+   background-color: #f5f9fc; 
+}
+
+.rwd-table tr:nth-child(odd):not(:first-child) {
+/*  background-color: #ebf3f9;  */
+}
+
+.rwd-table th {
+  display: none;
+}
+
+.rwd-table td {
+  display: block;
+}
+
+.rwd-table td:first-child {
+  margin-top: .5em;
+}
+
+.rwd-table td:last-child {
+  margin-bottom: .5em;
+}
+
+.rwd-table td:before {
+  content: attr(data-th) ": ";
+  font-weight: bold;
+  width: 500px;
+  display: inline-block;
+  color: #000;
+}
+
+.rwd-table th,
+.rwd-table td {
+  text-align: left;
+}
+
+.rwd-table {
+  color: #333;
+  border-radius: .4em;
+  overflow: hidden;
+}
+
+.rwd-table tr {
+  border-color: #bfbfbf;
+}
+
+.rwd-table th,
+.rwd-table td {
+  padding: .5em 1em;
+}
+
+  .rwd-table tr:nth-child(2) {
+    border-top: none;
+  }
+
+ 
+ /*  .rwd-table tr:hover:not(:first-child) {
+     background-color: red;
+   } */
+  .rwd-table td:before {
+    display: none;
+  }
+  .rwd-table th,
+  .rwd-table td {
+    display: table-cell;
+    padding: .25em .5em;
+  }
+  .rwd-table th:first-child,
+  .rwd-table td:first-child {
+    padding-left: 0;
+  }
+  .rwd-table th:last-child,
+  .rwd-table td:last-child {
+    padding-right: 0;
+  }
+  .rwd-table th,
+  .rwd-table td {
+    padding: 1em !important;
+  }
+.product_id{
+    width: 150px;
+    height: 39px;
+}
+   
+.tab_name{
+	border-top: 1px solid;
+    border-left: 1px solid;
+    height: 33px;
+    width: 97px;
+    border-right: 1px solid;
+    border-bottom: 1px solid;
+    padding-left: 6px;
+    padding-top: 5px;
+}
+.o_portal_sale_order_lines_list{
+	    margin-top: -17px;
+}
+input::-webkit-contacts-auto-fill-button {
+        visibility: visible;
+        pointer-events: all;
+    }
