@@ -3,7 +3,7 @@
     'name': 'Portal Orders',
     'version': '0.1',
     'summary': 'Portal Orders',
-    'depends': ['sale', 'portal'],
+    'depends': ['sale','crm','portal'],
 
     'data': [
         'security/ir.model.access.csv',
@@ -11,6 +11,7 @@
         'views/sales_order_design_templates.xml',
         'views/order_backend.xml',
         'views/certification.xml',
+        'views/inherit_crm.xml',
         'views/report.xml',
 
 

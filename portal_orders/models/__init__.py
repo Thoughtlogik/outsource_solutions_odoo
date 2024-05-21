@@ -2,3 +2,4 @@
 
 
 from . import sales_order
+from . import inherit_crm
