@@ -44,20 +44,24 @@
 <!--                </xpath>-->
                 <xpath expr="//field[@name='partner_id']" position="after">
                     <field name="por_batch_number"/>
+                    <field name="analysis_start"/>
+                    <field name="analysis_finish"/>
+                    <field name="analyst_name"/>
+                    <field name="relevant_temperatures"/>
                 </xpath>
                  <xpath expr="//field[@name='payment_term_id']" position="after">
                      <field name="collection_or_delivery"/>
                     <field name="option"/>
                 </xpath>
                 <xpath expr="//page[@name='other_information']" position="after">
-                    <page string="Collection Address">
+                    <page string="TEST PARAMETERS">
                         <group>
-                            <group>
+                            <!--<group>
                                 <field name="analysis_start"/>
                                 <field name="analysis_finish"/>
                                 <field name="analyst_name"/>
                                 <field name="relevant_temperatures"/>
-                            </group>
+                            </group>-->
                             <group string="Test Parameter">
                                 <field name="test_parameter_1"/>
                                 <field name="test_parameter_2"/>
@@ -76,6 +80,21 @@
 
             </field>
         </record>
+
+
+
+        <!--<record id="crm_form_view" model="ir.ui.view">
+            <field name="name">crm.lead.form</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='tag_ids']" position="after">
+                    <field name="preferred_call_back_date"/>
+                   &lt;!&ndash; <field name="call_back_time_from_new_float"/>&ndash;&gt;
+                   &lt;!&ndash; <field name="call_back_time_to"/>&ndash;&gt;
+                </xpath>
+            </field>
+        </record>-->
 
     </data>
 </odoo>

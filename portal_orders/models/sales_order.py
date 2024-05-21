@@ -114,3 +114,12 @@ class SaleOrder(models.Model):
         # Perform any additional processing if needed
         return sale_orders
 
+# # Inherit the sale order
+# class Lead(models.Model):
+#
+#     _inherit = 'crm.lead'
+#
+#     preferred_call_back_date = fields.Date("Preferred Callback Date")
+#     call_back_time_from_new_float = fields.Float("Callback time from")
+#     # call_back_time_to = fields.Float("Callback time to")
+
