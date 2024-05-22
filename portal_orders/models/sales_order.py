@@ -98,6 +98,8 @@ class SaleOrder(models.Model):
     collection_or_delivery = fields.Selection([('collection', 'Collection'),
                                                ('delivery', 'Delivery')], string='Collection/Delivery')
 
+    collection_address = fields.Char(string='Collection Address')
+
     # def get_the_price_list(self,partner):
     #     partner_id = self.env['res.partner'].search([('name', '=', partner)])
     #     price_name = partner_id.property_product_pricelist.id

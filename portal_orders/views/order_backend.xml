@@ -19,49 +19,30 @@
                 <xpath expr="//field[@name='state']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
-                <field name="pricelist_id" position="attributes">
+                <!--<field name="pricelist_id" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </field>
-
                 <label for="pricelist_id" position="attributes">
                     <attribute name="invisible">1</attribute>
-                </label>
-                <xpath expr="//field[@name='date_order']" position="after">
-                    <field name="sam_test_com_date"/>
-                </xpath>
-                <xpath expr="//field[@name='partner_id']" position="after">
-                    <field name="sam_received_date"/>
-                </xpath>
-                <xpath expr="//field[@name='sam_received_date']" position="after">
-                    <field name="sample_booking_date"/>
-
-                </xpath>
+                </label>-->
                 <xpath expr="//field[@name='partner_id']" position="after">
                     <field name="por_description"/>
-                </xpath>
-<!--                <xpath expr="//field[@name='partner_id']" position="after">-->
-<!--                    <field name="por_type"/>-->
-<!--                </xpath>-->
-                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="sam_received_date"/>
+                    <field name="sample_booking_date"/>
+                    <field name="sam_test_com_date"/>
                     <field name="por_batch_number"/>
+                </xpath>
+                <xpath expr="//field[@name='payment_term_id']" position="after">
                     <field name="analysis_start"/>
                     <field name="analysis_finish"/>
                     <field name="analyst_name"/>
                     <field name="relevant_temperatures"/>
-                </xpath>
-                 <xpath expr="//field[@name='payment_term_id']" position="after">
-                     <field name="collection_or_delivery"/>
+                    <field name="collection_or_delivery"/>
+                    <field name="collection_address" invisible = "collection_or_delivery != 'collection'"/>
                     <field name="option"/>
                 </xpath>
                 <xpath expr="//page[@name='other_information']" position="after">
                     <page string="TEST PARAMETERS">
-                        <group>
-                            <!--<group>
-                                <field name="analysis_start"/>
-                                <field name="analysis_finish"/>
-                                <field name="analyst_name"/>
-                                <field name="relevant_temperatures"/>
-                            </group>-->
                             <group string="Test Parameter">
                                 <field name="test_parameter_1"/>
                                 <field name="test_parameter_2"/>
@@ -74,28 +55,10 @@
                                 <field name="test_parameter_9"/>
                                 <field name="test_parameter_10"/>
                             </group>
-                        </group>
                     </page>
                 </xpath>
-
             </field>
         </record>
-
-
-
-        <!--<record id="crm_form_view" model="ir.ui.view">
-            <field name="name">crm.lead.form</field>
-            <field name="model">crm.lead</field>
-            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='tag_ids']" position="after">
-                    <field name="preferred_call_back_date"/>
-                   &lt;!&ndash; <field name="call_back_time_from_new_float"/>&ndash;&gt;
-                   &lt;!&ndash; <field name="call_back_time_to"/>&ndash;&gt;
-                </xpath>
-            </field>
-        </record>-->
-
     </data>
 </odoo>
 
