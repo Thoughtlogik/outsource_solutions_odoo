@@ -142,10 +142,12 @@ class PortalSaleOrder(http.Controller):
                 sale.update({'sam_received_date': post.get('use_by_date')})
             if  post.get('production_date'):
                 sale.update({'sam_test_com_date': post.get('production_date')})
-            if post.get('test_result'):
-                sale.update({'option': post.get('test_result')})
+            # if post.get('test_result'):
+            #     sale.update({'option': post.get('test_result')})
             if post.get('collection_delivery'):
                 sale.update({'collection_or_delivery': post.get('collection_delivery')})
+            if post.get('collect_address'):
+                sale.update({'collection_address': post.get('collect_address')})
             if post.get('test_parameter_1'):
                 sale.update({'test_parameter_1': post.get('test_parameter_1')})
             if post.get('test_parameter_2'):
@@ -221,9 +223,19 @@ class PortalSaleOrder(http.Controller):
 
     @http.route('/portal/export_all_sale_orders', type='http', auth="user", website=True)
     def export_all_sale_orders_portal(self, **kw):
-        orders = request.env['sale.order'].sudo().search(
-            ['&', ('partner_id', '=', request.env.user.partner_id.id), ('state', '=', 'sale')])
-        print(orders)
+        portal_group = request.env.ref('base.group_portal')
+        portal_partners = request.env['res.partner'].sudo().search([
+            ('user_ids.groups_id', 'in', portal_group.id)
+        ])
+        portal_partner_ids = portal_partners.ids
+        user_company_id = request.env.user.partner_id.company_id.id
+        orders = request.env['sale.order'].sudo().search([
+            ('partner_id', 'in', portal_partner_ids),
+            ('partner_id.parent_id', '=', request.env.user.partner_id.parent_id.id),
+            ('state', '=', 'sale')
+        ])
+        # orders = request.env['sale.order'].sudo().search(
+        #     ['&', ('partner_id', '=', request.env.user.partner_id.id), ('state', '=', 'sale')])
         if orders:
             csv_data = StringIO()
             csv_writer = csv.writer(csv_data)

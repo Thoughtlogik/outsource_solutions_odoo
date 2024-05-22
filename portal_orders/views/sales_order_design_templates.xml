@@ -7,6 +7,13 @@
         </xpath>
     </template>
 
+    <!--changed the sale orders breadcrumbs to work orders-->
+    <template id="custom_portal_my_home_sale_sale_breadcrumbs" inherit_id="sale.portal_my_home_menu_sale" priority="20">
+         <xpath expr="//t[@t-else='' and text()='Sales Orders']" position="replace">
+             <t t-else="">Work Orders</t>
+        </xpath>
+    </template>
+
     <template id="my_account_link_inherited" inherit_id="portal.user_dropdown">
         <xpath expr="//a[@href='/my/home']" position="attributes">
             <attribute name="invisible">1</attribute>
@@ -22,6 +29,9 @@
                 <th class="text-end" t-if="groupby != 'amount_total'">
                     <span class='d-none d-md-inline'>Batch Number</span>
                 </th>
+        </xpath>
+        <xpath expr="//span[hasclass('d-md-inline') and text()='Sales Order #']" position="replace">
+            <span class='d-none d-md-inline'>Work Order #</span>
         </xpath>
          <xpath expr="//t[@t-out='order.name']" position="after">
             <td class="text-end" t-if="groupby != 'amount_total'">
@@ -60,7 +70,7 @@
                         <span t-field="sale_order.option"/>
                     </strong>
                 </div>
-                <div class="mb-3 col-6" t-if="sale_order.option">
+                <!--<div class="mb-3 col-6" t-if="sale_order.option">
                     <strong class="d-block mb-1">Sample Booking Date :
                         <span t-field="sale_order.sample_booking_date"/>
                     </strong>
@@ -74,14 +84,19 @@
                     <strong class="d-block mb-1">Sample Test Completion Date :
                         <span t-field="sale_order.sam_test_com_date"/>
                     </strong>
+                </div>-->
+                <div class="mb-3 col-6">
+                    <strong class="d-block mb-1">Test Result Status :
+                        <span t-field="sale_order.portal_state"/>
+                    </strong>
                 </div>
-                <div class="mb-3 col-6" t-if="sale_order.option">
+                <div class="mb-3 col-6">
                     <strong class="d-block mb-1">Batch Number :
                         <span t-field="sale_order.por_batch_number"/>
                     </strong>
                 </div>
-                <div class="mb-3 col-6" t-if="sale_order.option">
-                    <strong class="d-block mb-1">Description :
+                <div class="mb-3 col-6">
+                    <strong class="d-block mb-1">Sample Description :
                         <span t-field="sale_order.por_description"/>
                     </strong>
                 </div>
@@ -121,7 +136,7 @@
                 <a t-if="sale_order"
                    t-attf-href="/orders?{{ keep_query() }}">Sale Orders
                 </a>
-                <t t-else="">Sale Orders</t>
+                <t t-else="">Work Orders</t>
             </li>
         </xpath>
     </template>
@@ -151,22 +166,13 @@
 
 
 
-     <template id="inherit_sale_order_buttons" inherit_id="sale.sale_order_portal_template">
-        <xpath expr="//div[@class='o_download_pdf d-flex gap-1 flex-lg-column flex-xl-row']" position="after">
-                    <a class="btn btn-secondary btn-block o_custom_btn"
-                       title="Custom Action" t-attf-href="/portal/print_report">
-                        <i class="fa fa-star"/>
-                        <font color="white">Certification</font>
-                    </a>
-        </xpath>
-    </template>
 
      <template id="inherit_sale_order_buttons" inherit_id="sale.sale_order_portal_template">
         <xpath expr="//div[@class='o_download_pdf d-flex gap-1 flex-lg-column flex-xl-row']" position="after">
             <div class="btn-group flex-grow-1 mb-1"
                  t-if="sale_order.option == 'pass'">
                 <a class="btn btn-secondary btn-block o_custom_btn"
-                   title="Custom Action" t-attf-href="/portal/print_report">
+                   title="Custom Action" t-attf-href="/portal/print_report" style="background-color:green">
                     <i class="fa fa-star"/>
                     <font color="white">Certification</font>
                 </a>
@@ -310,7 +316,7 @@
                                 <span class="skit_discord_txt" style="color: black;">Discard</span>
                             </a>
                         </div>
-                        <div style="width:100%;height:56%;overflow:scroll;overflow-y:scroll;overflow-x:hidden;position: relative;">
+                        <div style="width:100%;height:110%;overflow:scroll;overflow-y:scroll;overflow-x:hidden;position: relative;">
                             <div class="sales_form_details" id="sales_form">
                                 <div class="form_details">
                                     <div class="left_data" style="width: 50%;">
@@ -344,17 +350,17 @@
                                                    t-att-value="production_date"
                                                    t-att-id="'production_date'"></input>
                                         </div>
-                                        <div class="batch_number">
+                                        <!--<div class="batch_number">
                                             <label style="margin-right: 22px;">Test Result</label>
                                             <select class="batch_number_input"
                                                     name="test_result"
                                                     t-att-value="test_result"
                                                     t-att-id="'test_result'">
-                                                <option value="">-- Select --</option> <!-- Add an empty option -->
+                                                <option value="">&#45;&#45; Select &#45;&#45;</option> &lt;!&ndash; Add an empty option &ndash;&gt;
                                                 <option value="pass" t-att-selected="test_result == 'pass'">Pass</option>
                                                 <option value="fail" t-att-selected="test_result == 'fail'">Fail</option>
                                             </select>
-                                        </div>
+                                        </div>-->
                                         <div class="batch_number">
                                             <label>Test Parameter 1</label>
                                             <input type="text" class="test_des" name="test_parameter_1"
@@ -403,18 +409,52 @@
                                                    t-att-value="use_by_date"
                                                    t-att-id="'use_by_date'"></input>
                                         </div>
-                                        <div class="collection_delivery">
+                                        <!--<div class="collection_delivery">
                                             <label style="margin-right: 50px;">Collection/Delivery</label>
                                             <select class="collection_delivery_input"
                                                     name="collection_delivery"
                                                     t-att-value="collection_delivery"
                                                     t-att-id="'collection_delivery'"
                                                     >
-                                                <option value="">-- Select --</option> <!-- Add an empty option -->
+                                                <option value="">&#45;&#45; Select &#45;&#45;</option> &lt;!&ndash; Add an empty option &ndash;&gt;
                                                 <option value="collection" t-att-selected="collection_delivery == 'collection'">Collection</option>
                                                 <option value="delivery" t-att-selected="collection_delivery == 'delivery'">Delivery</option>
                                             </select>
+                                        </div>-->
+
+                                        <div class="collection_delivery">
+                                            <label style="margin-right: 50px;">Collection/Delivery</label>
+                                            <select class="collection_delivery_input"
+                                                    name="collection_delivery"
+                                                    id="collection_delivery"
+                                                    onchange="toggleCollectAddressField()">
+                                                <option value="">-- Select --</option> <!-- Add an empty option -->
+                                                <option value="collection">Collection</option>
+                                                <option value="delivery">Delivery</option>
+                                            </select>
                                         </div>
+
+                                        <!-- New text input field for Collect Address -->
+                                       <div class="collection_delivery" id="collect_address_field" style="display: none; margin-top: 20px;">
+                                        <label for="collect_address" style="margin-right: 70px;">Collect Address</label>
+                                        <textarea id="collect_address" name="collect_address" class="collection_delivery_input" placeholder="Enter collect address" style="resize: none;height: 80px;"></textarea>
+                                    </div>
+
+                                        <script>
+                                            function toggleCollectAddressField() {
+                                                var collectionDeliverySelect = document.getElementById('collection_delivery');
+                                                var collectAddressField = document.getElementById('collect_address_field');
+
+                                                if (collectionDeliverySelect.value === 'collection') {
+                                                    collectAddressField.style.display = 'block';
+                                                } else {
+                                                    collectAddressField.style.display = 'none';
+                                                }
+                                            }
+
+                                            // Initial call to set the correct visibility based on the preselected value
+                                            window.onload = toggleCollectAddressField;
+                                        </script>
                                         <!--<div class="requested_by">
                                             <label style="margin-right: 88px;">Requested By</label>
                                             &lt;!&ndash;<input type="text" class="requested_by_input"
@@ -446,20 +486,7 @@
 
 
 
-                                        <div class="price">
-                                            <label style="position: absolute;">Sample Description</label>
-                                            <!--<select class="price_list" name="price"
-                                                    t-att-value="price" t-att-id="'price'" required="required">
-                                                <option></option>
-                                                <t t-foreach="price_id" t-as="price">
-                                                    <option class="options" t-att-value="price.id"
-                                                            t-esc="price.name">
-                                                    </option>
-                                                </t>
-                                            </select>-->
-                                            <textarea type="text" class="price_list_des" name="sample_description" t-att-value="des"
-                                                   t-att-id="'des'" style="height:100px; margin-left: 195px;"></textarea>
-                                        </div>
+
                                         <div class="test_parameter_7">
                                             <label>Test Parameter 7</label>
                                             <input type="text" class="test_parameter_7_input" name="test_parameter_7"
@@ -477,9 +504,28 @@
                                         </div>
                                         <div class="price">
                                             <label>Test Parameter 10</label>
-                                            <input type="text" class="test_parameter_10_input" name="test_parameter_10"
-                                                   />
+                                            <input type="text" class="test_parameter_10_input" name="test_parameter_10"/>
                                         </div>
+                                        <div class="price">
+                                            <label style="position: absolute;">Sample Description</label>
+                                            <!--<select class="price_list" name="price"
+                                                    t-att-value="price" t-att-id="'price'" required="required">
+                                                <option></option>
+                                                <t t-foreach="price_id" t-as="price">
+                                                    <option class="options" t-att-value="price.id"
+                                                            t-esc="price.name">
+                                                    </option>
+                                                </t>
+                                            </select>-->
+                                            <textarea type="text" class="price_list_des" name="sample_description" t-att-value="des"
+                                                   t-att-id="'des'" style="height:70px; resize: none ;margin-left: 195px;"></textarea>
+                                        </div>
+
+
+
+
+
+
                                         <!--<div class="price">
                                             <label>Pricelist</label>
                                             <select class="price_list" name="price"
