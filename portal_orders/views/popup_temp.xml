@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="temp_popup"
+              name="Sales Order">>
+                                <div class="card-body">
+                                    <div class="o_portal_sale_order_lines">
+                                        <div class="oe_structure oe_structure_no_spacing">
+                                            <div class="oe_notebook">
+                                                <br/> <!-- Add some space here -->
+                                                <br/> <!-- Add some space here -->
+                                                <br/> <!-- Add some space here -->
+                                                <br/> <!-- Add some space here -->
+                                                <br/> <!-- Add some space here --><br/> <!-- Add some space here -->
+                                                <br/> <!-- Add some space here -->
+                                                <br/> <!-- Add some space here -->
+                                                <div class="oe_notebook_headers">
+                                                    <p class="tab_name">Order Lines</p>
+                                                </div>
+                                                <div class="oe_notebook_content">
+                                                    <div class="oe_notebook_page tab-pane active"
+                                                         role="tabpanel">
+                                                        <div class="o_portal_sale_order_lines_list">
+                                                            <table class="table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Product</th>
+                                                                        <th>Description</th>
+                                                                        <th>Quantity</th>
+                                                                        <th>Uom</th>
+                                                                        <th>Unit Price</th>
+                                                                        <th>Taxes</th>
+                                                                        <th>Discount</th>
+                                                                        <th>Subtotal</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody class="o_portal_sale_order_lines_tbody"
+                                                                       id="order_lines_table_body">
+                                                                </tbody>
+                                                            </table>
+                                                            <button type="button" class="btn btn-primary"
+                                                                    id="add-line-btn" onclick="addLine()">Add a Line
+                                                            </button>
+                                                        </div>
+
+                                                        <script type="text/javascript">
+                                                            function addLine() {
+                                                            var table =
+                                                            document.getElementById('order_lines_table_body');
+                                                            var
+                                                            row_id = table.rows.length;
+                                                            var row = table.insertRow(-1);
+                                                            row.id = `row_${row_id}`;
+                                                            row.innerHTML = `
+                                                            <tr class="rows" id="row_ids">
+                                                                <td>
+                                                                    <input type="Char" class="form-control product_id"
+                                                                           name="product_name_${row_id}" list="my-options"
+                                                                           onchange="onDescriptionChange(this.value, ${row_id})">
+                                                                        <datalist class="product_id" id="my-options"
+                                                                        >
+                                                                            <option></option>
+                                                                            <t t-foreach="product_id" t-as="product">
+                                                                                <option>
+                                                                                    <t t-esc="product.default_code"></t>
+                                                                                    <t t-esc="product.name"></t>
+                                                                                    <t t-esc="{product.lst_price}"></t>
+                                                                                    <t t-esc="[product.uom_id.name]"></t>
+                                                                                </option>
+                                                                            </t>
+                                                                        </datalist>
+                                                                    </input>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="Char" name="description_${row_id}"
+                                                                           t-att-id="'description_${row_id}'"
+                                                                           class="form-control"/>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number" name="qty_${row_id}" value="1"
+                                                                           t-att-id="'qty_${row_id}'"
+                                                                           class="form-control quantity"
+                                                                           onchange="onQty(this.value, ${row_id})"/>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="Char" id="product_uom_${row_id}"
+                                                                           name="product_uom_${row_id}" list="uom-options"
+                                                                           class="form-control">
+
+                                                                        <datalist id="uom-options"
+                                                                        >
+                                                                            <option></option>
+                                                                            <t t-foreach="product_uom_id"
+                                                                               t-as="product_uom">
+                                                                                <option>
+                                                                                    <t t-esc="product_uom.name"></t>
+                                                                                </option>
+                                                                            </t>
+                                                                        </datalist>
+                                                                    </input>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="Float" name="price_unit_${row_id}"
+                                                                           t-att-id="'price_unit_${row_id}'"
+                                                                           onchange="onUnitPrice(this.value, ${row_id})"
+                                                                           class="form-control"/>
+                                                                </td>
+                                                                <td>
+                                                                    <div>
+                                                                        <select multiple="multiple"
+                                                                                name="childrentaxids_${row_id}"
+                                                                                class="form-control chosen dt_cq children_tax_ids dt_select_text tax_${row_id}"
+                                                                                t-att-id="'children_tax_id_${row_id}'"
+                                                                                onchange="onTaxChange(${row_id})">
+
+                                                                            <t t-foreach='children_tax_ids'
+                                                                               t-as="tax_id_get">
+                                                                                <option t-esc='tax_id_get.name'
+                                                                                        t-att-value='tax_id_get.id'/>
+                                                                                <!-- <t t-esc="[tax_id_get.amount]"></t> -->
+
+
+                                                                            </t>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="prod_empty_user" hidden="hidden">
+                                                                    <input
+                                                                            class="form-control prod_empty_user_${row_id}"
+                                                                            type="text" hidden="hidden"
+                                                                            name="tax_emp_${row_id}"
+                                                                            t-att-id="'tax_emp_${row_id}'"/>
+                                                                </td>
+
+                                                                <td>
+                                                                    <input type="Float" name="discount_${row_id}"
+                                                                           t-att-id="'discount_${row_id}'" id="discount"
+                                                                           class="form-control"
+                                                                           onchange="discountLine(${row_id})"/>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="Float"
+                                                                           name="price_subtotal_${row_id}"
+                                                                           t-att-id="'subtotal_${row_id}'" id="subtotal"
+                                                                           class="form-control"/>
+                                                                </td>
+
+
+                                                                <td>
+                                                                    <button type="button" class="btn btn-danger"
+                                                                            onclick="removeLine(${row_id})">
+                                                                        <i class="fa fa-trash"></i>
+                                                                    </button>
+                                                                    <button  type="button" class="btn btn-danger"
+                                                                            onclick="clickpopup()">
+                                                                        <i class="fa fa-trash"></i>
+                                                                        Add a TEST
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                            `;
+                                                            }
+
+                                                            function onQty(quantity,row_id) {
+                                                            var quantity =
+                                                            document.getElementById(`qty_${row_id}`).value
+                                                            var price =
+                                                            document.getElementById(`price_unit_${row_id}`).value
+                                                            var
+                                                            subtotal = quantity * price
+                                                            document.getElementById(`subtotal_${row_id}`).value
+                                                            =
+                                                            subtotal
+                                                            var discount =
+                                                            document.getElementById(`discount_${row_id}`).value/100*subtotal
+                                                            var total = subtotal - discount
+                                                            var subtotal =
+                                                            document.getElementById(`subtotal_${row_id}`).value
+                                                            =
+                                                            total
+                                                            }
+
+                                                            function onUnitPrice(unitPrice,row_id) {
+                                                            console.log("unitPrice",unitPrice)
+                                                            }
+
+                                                            function onDescriptionChange(product_id,row_id) {
+                                                            const products = product_id
+                                                            if (products != ''){
+                                                            const str =
+                                                            product_id;
+                                                            console.log("str",str)
+                                                            const ans = str.split('{')
+                                                            const ansvar = ans[1]
+                                                            const ans2 = ansvar.split('}')
+                                                            const final = ans2[0]
+                                                            const
+                                                            uom = str.split("['")
+                                                            const uomvar = uom[1]
+                                                            const uom2 =
+                                                            uomvar.split("']")
+                                                            const uom_final = uom2[0]
+                                                            var
+                                                            descriptions = {
+                                                            'product': product_id,
+                                                            'price': final,
+                                                            'uom': uom_final
+                                                            };
+                                                            document.getElementById(`qty_${row_id}`).value = 1
+                                                            document.getElementById(`description_${row_id}`).value =
+                                                            descriptions['product'];
+                                                            document.getElementById(`price_unit_${row_id}`).value =
+                                                            descriptions['price'];
+                                                            document.getElementById(`product_uom_${row_id}`).value =
+                                                            descriptions['uom'];
+                                                            document.getElementById(`subtotal_${row_id}`).value
+                                                            =
+                                                            descriptions['price']
+                                                            }
+                                                            }
+                                                            function onTaxChange(row_id){
+
+                                                            var UserIds = $(`.tax_${row_id}`).val()
+                                                            document.getElementById(`tax_emp_${row_id}`).value
+                                                            =UserIds
+                                                            }
+
+                                                            function discountLine(row_id) {
+                                                            var quantity =
+                                                            document.getElementById(`qty_${row_id}`).value
+                                                            var price =
+                                                            document.getElementById(`price_unit_${row_id}`).value
+                                                            var
+                                                            subtotal = quantity * price
+                                                            document.getElementById(`subtotal_${row_id}`).value
+                                                            =
+                                                            subtotal
+                                                            var discount =
+                                                            document.getElementById(`discount_${row_id}`).value/100*subtotal
+                                                            var total = subtotal - discount
+                                                            var subtotal =
+                                                            document.getElementById(`subtotal_${row_id}`).value
+                                                            =
+                                                            total
+                                                            }
+
+                                                            function removeLine(row_id) {
+                                                            document.getElementById(`row_${row_id}`).remove();
+                                                            }
+                                                            function discordBtn(){
+                                                            window.location.href = '/my/orders#'
+                                                            }
+                                                        </script>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+        </div>
+</template>
+</odoo>

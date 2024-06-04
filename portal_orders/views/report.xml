@@ -3,7 +3,7 @@
     <data>
 
         <!-- Paper Format -->
-        <record id="paperformat_sample_certification" model="report.paperformat">
+        <!--<record id="paperformat_sample_certification" model="report.paperformat">
             <field name="name">Certification</field>
             <field name="default" eval="True"/>
             <field name="format">A4</field>
@@ -16,18 +16,18 @@
             <field name="header_spacing">0</field>
             <field name="disable_shrinking" eval="True"/>
             <field name="dpi">96</field>
-        </record>
+        </record>-->
 
         <!-- QWeb Reports -->
         <record id="action_print_pdf" model="ir.actions.report">
             <field name="name">Certification</field>
             <field name="model">sale.order</field>
             <field name="report_type">qweb-pdf</field>
-            <field name="report_name">portal_orders.certification_report_template</field>
-            <field name="report_file">portal_orders.certification_report_template</field>
+            <field name="report_name">portal_orders.certification_test_report_template</field>
+            <field name="report_file">portal_orders.certification_test_report_template</field>
             <field name="binding_model_id" ref="model_sale_order"/>
             <field name="binding_type">report</field>
-            <field name="paperformat_id" ref="paperformat_sample_certification"/>
+            <!--<field name="paperformat_id" ref="paperformat_sample_certification"/>-->
         </record>
 
 

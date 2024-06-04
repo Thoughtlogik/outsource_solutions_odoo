@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="seq_sale_order_product" model="ir.sequence">
+        <field name="name">Product Line</field>
+        <field name="code">product.line</field>
+        <!--        <field name="prefix">PR</field>-->
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+</odoo>

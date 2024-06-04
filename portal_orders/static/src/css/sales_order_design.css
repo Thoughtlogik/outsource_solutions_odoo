@@ -9,7 +9,7 @@
 
 .form_details{
 	display: flex;
-    height: 400px;
+    height: 365px;
 }
 .cust_name{
 	margin-left: 25px;
@@ -68,7 +68,12 @@ margin-left: 40px;
         cursor: pointer;
 }
 .production_date_input{
-margin-left: 40px;
+margin-left: 43px;
+    width: 265px;
+        cursor: pointer;
+}
+.po_number_input{
+margin-left: 73px;
     width: 265px;
         cursor: pointer;
 }
@@ -365,7 +370,7 @@ margin-left: 65px;
 	border-top: 1px solid;
     border-left: 1px solid;
     height: 33px;
-    width: 97px;
+    width: 142px;
     border-right: 1px solid;
     border-bottom: 1px solid;
     padding-left: 6px;
