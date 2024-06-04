@@ -8,9 +8,12 @@
     'data': [
         'security/ir.model.access.csv',
         'report/report_sale.xml',
+        'data/sequence.xml',
         'views/sales_order_design_templates.xml',
+        # 'views/popup_temp.xml',
         'views/order_backend.xml',
-        'views/certification.xml',
+        # 'views/certification.xml',
+        'views/new_certificate.xml',
         'views/inherit_crm.xml',
         'views/report.xml',
 

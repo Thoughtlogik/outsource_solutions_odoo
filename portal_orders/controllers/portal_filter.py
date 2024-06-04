@@ -156,11 +156,12 @@ class CustomerPortal(payment_portal.PaymentPortal):
             'all': {'input': 'all', 'label': _('Search in All'), 'order': 1},
             'name': {'input': 'name', 'label': _('Search in Name'), 'order': 2},
             'customer': {'input': 'customer', 'label': _('Search in Customer'), 'order': 3},
-            'date': {'input': 'date', 'label': _('Search in Date'), 'order': 4},
+            'date': {'input': 'date', 'label': _('Search in Collection Date'), 'order': 4},
             'batch_number': {'input': 'batch_number', 'label': _('Search in Batch Number'), 'order': 5},
-            'product': {'input': 'product', 'label': _('Search in Product'), 'order': 6},
-            'result': {'input': 'result', 'label': _('Search in Result'), 'order': 7},
+            'product': {'input': 'product', 'label': _('Search in Product Description'), 'order': 6},
+            'result': {'input': 'result', 'label': _('Search in Test Result'), 'order': 7},
             'use_by': {'input': 'use_by', 'label': _('Search in Use By Date'), 'order': 8},
+            'po_number': {'input': 'po_number', 'label': _('Search in PO Number'), 'order': 9},
         }
         return dict(sorted(values.items(), key=lambda item: item[1]["order"]))
 
@@ -180,25 +181,27 @@ class CustomerPortal(payment_portal.PaymentPortal):
             search_domain.append([('partner_id.name', 'ilike', search)])
         if search_in in ('date', 'all'):
             if is_valid_date(search):
-                search_domain.append([('date_order', '=', search)])
+                search_domain.append([('sam_test_com_date', '=', search)])
         if search_in in ('batch_number', 'all'):
-            search_domain.append([('por_batch_number', 'ilike', search)])
+            search_domain.append([('product_ids.batch_num', 'ilike', search)])
         if search_in in ('result', 'all'):
-            search_domain.append([('option', 'ilike', search)])
+            search_domain.append([('order_line.result_pass_fail', 'ilike', search)])
         if search_in in ('product', 'all'):
             search_domain.append([('order_line.name', 'ilike', search)])
         if search_in in ('use_by', 'all'):
             if is_valid_date(search):
-                search_domain.append([('sam_received_date', '=', search)])
+                search_domain.append([('product_ids.use_by_date_line', '=', search)])
+        if search_in in ('po_number', 'all'):
+            search_domain.append([('po_number', 'ilike', search)])
 
         return OR(search_domain)
     def _get_my_tasks_searchbar_filters_new(self, project_domain=None, task_domain=None):
         searchbar_filters = {
             'all': {'label': _('All'), 'domain': [('name', '!=', False)]},
-            'por_batch_number': {'label': _('Batch Number'), 'domain': [('por_batch_number', '!=', False)]},
-            'option_pass': {'label': _('Test Result: Pass'), 'domain': [('option', '=', 'pass')]},
-            'option_fail': {'label': _('Test Result: Fail'), 'domain': [('option', '=', 'fail')]},
-            'sam_received_date': {'label': _('Use By Date'), 'domain': [('sam_received_date', '!=', False)]},
+            'por_batch_number': {'label': _('Batch Number'), 'domain': [('product_ids.batch_num', '!=', False)]},
+            'option_pass': {'label': _('Test Result: Pass'), 'domain': [('order_line.result_pass_fail', '=', 'pass')]},
+            'option_fail': {'label': _('Test Result: Fail'), 'domain': [('order_line.result_pass_fail', '=', 'fail')]},
+            'sam_received_date': {'label': _('Use By Date'), 'domain': [('product_ids.use_by_date_line', '!=', False)]},
             'date_order': {'label': _('Order Date'), 'domain': [('date_order', '!=', False)]},
         }
         print("custom def3")

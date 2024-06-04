@@ -9,8 +9,8 @@
 
     <!--changed the sale orders breadcrumbs to work orders-->
     <template id="custom_portal_my_home_sale_sale_breadcrumbs" inherit_id="sale.portal_my_home_menu_sale" priority="20">
-         <xpath expr="//t[@t-else='' and text()='Sales Orders']" position="replace">
-             <t t-else="">Work Orders</t>
+        <xpath expr="//t[@t-else='' and text()='Sales Orders']" position="replace">
+            <t t-else="">Work Orders</t>
         </xpath>
     </template>
 
@@ -26,30 +26,41 @@
 
     <template id="custom_portal_batch_number" inherit_id="sale.portal_my_orders">
         <xpath expr="//span[hasclass('d-md-inline')]" position="after">
-                <th class="text-end" t-if="groupby != 'amount_total'">
-                    <span class='d-none d-md-inline'>Batch Number</span>
-                </th>
+            <th class="text-end" t-if="groupby != 'amount_total'">
+                <span class='d-none d-md-inline'>Batch Number</span>
+            </th>
+            <th class="text-end" t-if="groupby != 'amount_total'">
+                <span class='d-none d-md-inline'>PO Number</span>
+            </th>
+            <th class="text-end" t-if="groupby != 'amount_total'">
+                <span class='d-none d-md-inline'>Collection Date</span>
+            </th>
         </xpath>
         <xpath expr="//span[hasclass('d-md-inline') and text()='Sales Order #']" position="replace">
             <span class='d-none d-md-inline'>Work Order #</span>
         </xpath>
-         <xpath expr="//t[@t-out='order.name']" position="after">
+        <xpath expr="//t[@t-out='order.name']" position="after">
             <td class="text-end" t-if="groupby != 'amount_total'">
                 <t t-out="order.por_batch_number"/>
+            </td>
+            <td class="text-end" t-if="groupby != 'amount_total'">
+                <t t-out="order.po_number"/>
+            </td>
+            <td class="text-end" t-if="groupby != 'amount_total'">
+                <t t-out="order.sam_test_com_date"/>
             </td>
         </xpath>
         <xpath expr="//th[hasclass('text-end') and text()='Order Date']" position="replace">
             <tr t-if="groupby in ('amount_total')">
                 <th class="text-end">
                     <th class="text-center" t-if="groupby != 'amount_total'">
-                        <span t-out="orders['amount_total'].name" />
+                        <span t-out="orders['amount_total'].name"/>
                     </th>
                 </th>
             </tr>
             <th class="text-end" t-if="groupby != 'amount_total'">Order Date</th>
         </xpath>
     </template>
-
 
 
     <template id="custom_portal_my_orders" inherit_id="sale.portal_my_orders">
@@ -59,6 +70,135 @@
                     <i class="fa fa-download"></i>
                 </a>
             </td>
+        </xpath>
+    </template>
+    <template id="custom_sale_order_portal_content" inherit_id="sale.sale_order_portal_content">
+        <xpath expr="//th[@id='product_name_header' and text()='Products']" position="replace">
+            <th class="text-start" id="product_name_header">Tests</th>
+        </xpath>
+        <xpath expr="//th[@id='product_name_header']" position="before">
+            <th class="text-start">Product Name</th>
+        </xpath>
+        <xpath expr="//h3[@id='details_title' and text()='Order Detail']" position="replace">
+            <h3 id="details_title">Test Request</h3>
+        </xpath>
+        <!--<xpath expr="//th[@id='product_name_header']" position="before">
+            <th class="text-start">sample description</th>
+        </xpath>-->
+
+        <!--<xpath expr="//td[@id='product_name']" position="before">
+            <tr  t-foreach="line.order_id.product_ids" t-as="product_line" />
+                <td>
+                    <t  t-esc="product_line.sample_description"/>
+                </td>
+            </tr>
+
+        </xpath>-->
+
+        <xpath expr="//td[@id='product_name']" position="before">
+            <td></td>
+        </xpath>
+
+    </template>
+    <!--<template id="custom_sale_order_portal_content_new" inherit_id="sale.sale_order_portal_content">
+        <xpath expr="//td[@id='product_name']" position="before">
+            <td>
+                <table>
+                    <t t-foreach="line.order_id.product_ids" t-as="product_line">
+                        <tr>
+                            <td>
+                                <t t-esc="product_line.sample_description"/>
+                            </td>
+                        </tr>
+                    </t>
+                </table>
+            </td>
+        </xpath>
+    </template>-->
+    <template id="custom_sale_order_portal_content_custom_design" inherit_id="sale.sale_order_portal_content">
+        <xpath expr="//h3[@id='details_title']" position="before">
+            <h3 id="details_title">Products/Samples</h3>
+            <table class="table table-sm">
+                <thead class="bg-100">
+                    <tr>
+                        <th style="width:10px;">Sample Number</th>
+                        <th style="width:10px; text-align:left;">Product</th>
+                        <th style="width:100px; text-align:left; white-space: nowrap;">Use By Date</th>
+                        <th style="width:10px; text-align:left;">Sample Description</th>
+                        <th style="width:10px; text-align:left;">Product Description</th>
+                        <th style="width:10px; text-align:left;">Batch Number</th>
+                        <th style="width:10px; text-align:left;">Production Date</th>
+                        <th style="width:10px; text-align:left;">Test Parameter 1</th>
+                        <th style="width:10px; text-align:left;">Test Parameter 2</th>
+                        <th style="width:10px; text-align:left;">Test Parameter 3</th>
+                        <th style="width:10px; text-align:left;">Test Parameter 4</th>
+                        <th style="width:10px; text-align:left;">Test Parameter 5</th>
+                        <th style="width:10px; text-align:left;">Test Parameter 6</th>
+                        <th style="width:10px; text-align:left;">Test Parameter 7</th>
+                        <th style="width:10px; text-align:left;">Test Parameter 8</th>
+                        <th style="width:10px; text-align:left;">Test Parameter 9</th>
+                        <th style="width:10px; text-align:left;">Test Parameter 10</th>
+                    </tr>
+                </thead>
+                <tbody class="sale_tbody">
+                    <t t-foreach="sale_order.product_ids" t-as="line">
+                        <tr>
+                            <td>
+                                <t t-esc="line.osl_sample_number"/>
+                            </td>
+                            <td>
+                                <t t-esc="line.product_name_line"/>
+                            </td>
+                            <td>
+                                <t t-esc="line.use_by_date_line"/>
+                            </td>
+                            <td>
+                                <t t-esc="line.sample_description"/>
+                            </td>
+                            <td>
+                                <t t-esc="line.product_description"/>
+                            </td>
+                            <td>
+                                <t t-esc="line.batch_num"/>
+                            </td>
+                            <td>
+                                <t t-esc="line.production_date"/>
+                            </td>
+                            <td>
+                                <t t-esc="line.test_parameter_1"/>
+                            </td>
+                            <td>
+                                <t t-esc="line.test_parameter_2"/>
+                            </td>
+                            <td>
+                                <t t-esc="line.test_parameter_3"/>
+                            </td>
+                            <td>
+                                <t t-esc="line.test_parameter_4"/>
+                            </td>
+                            <td>
+                                <t t-esc="line.test_parameter_5"/>
+                            </td>
+                            <td>
+                                <t t-esc="line.test_parameter_6"/>
+                            </td>
+                            <td>
+                                <t t-esc="line.test_parameter_7"/>
+                            </td>
+                            <td>
+                                <t t-esc="line.test_parameter_8"/>
+                            </td>
+                            <td>
+                                <t t-esc="line.test_parameter_9"/>
+                            </td>
+                            <td>
+                                <t t-esc="line.test_parameter_10"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+
         </xpath>
     </template>
 
@@ -86,18 +226,33 @@
                     </strong>
                 </div>-->
                 <div class="mb-3 col-6">
-                    <strong class="d-block mb-1">Test Result Status :
+                    <strong class="d-block mb-1">Work Order Status :
                         <span t-field="sale_order.portal_state"/>
                     </strong>
                 </div>
                 <div class="mb-3 col-6">
-                    <strong class="d-block mb-1">Batch Number :
-                        <span t-field="sale_order.por_batch_number"/>
+                    <strong class="d-block mb-1">Collection Date :
+                        <span t-field="sale_order.sam_test_com_date"/>
                     </strong>
                 </div>
                 <div class="mb-3 col-6">
-                    <strong class="d-block mb-1">Sample Description :
-                        <span t-field="sale_order.por_description"/>
+                    <strong class="d-block mb-1">PO Number :
+                        <span t-field="sale_order.po_number"/>
+                    </strong>
+                </div>
+                <!--<div class="mb-3 col-6">
+                    <strong class="d-block mb-1">Batch Number :
+                        <span t-field="sale_order.por_batch_number"/>
+                    </strong>
+                </div>-->
+                <div class="mb-3 col-6">
+                    <strong class="d-block mb-1">Special Requirements :
+                        <span t-field="sale_order.special_requirements"/>
+                    </strong>
+                </div>
+                <div class="mb-3 col-6">
+                    <strong class="d-block mb-1">Analysis Request Date :
+                        <span t-field="sale_order.sample_booking_date"/>
                     </strong>
                 </div>
             </div>
@@ -165,14 +320,13 @@
     </template>
 
 
-
-
-     <template id="inherit_sale_order_buttons" inherit_id="sale.sale_order_portal_template">
+    <template id="inherit_sale_order_buttons" inherit_id="sale.sale_order_portal_template">
         <xpath expr="//div[@class='o_download_pdf d-flex gap-1 flex-lg-column flex-xl-row']" position="after">
             <div class="btn-group flex-grow-1 mb-1"
-                 t-if="sale_order.option == 'pass'">
+                 t-if="sale_order.portal_state == 'testing_complete'">
                 <a class="btn btn-secondary btn-block o_custom_btn"
-                   title="Custom Action" t-attf-href="/portal/print_report" style="background-color:green">
+                   title="Custom Action" t-attf-href="/portal/print_report?id=#{sale_order.id}"
+                   style="background-color:green">
                     <i class="fa fa-star"/>
                     <font color="white">Certification</font>
                 </a>
@@ -180,7 +334,7 @@
         </xpath>
     </template>
 
-     <template id="custom_portal_my_invoice" inherit_id="account.portal_my_invoices">
+    <template id="custom_portal_my_invoice" inherit_id="account.portal_my_invoices">
         <xpath expr="//td[@class='text-end']" position="after">
             <td class="text-right">
                 <a class="btn btn-secondary" t-attf-href="/portal/export_invoices/button?invoice_id={{ invoice.id }}">
@@ -190,7 +344,7 @@
         </xpath>
     </template>
 
-     <template id="custom_portal_my_quotations"
+    <template id="custom_portal_my_quotations"
               inherit_id="account.portal_my_invoices">
         <xpath expr="//t[@t-call='portal.portal_searchbar']"
                position="after">
@@ -203,13 +357,13 @@
         </xpath>
     </template>
 
-     <!--<template id="custom_portal_my_home_bg" inherit_id="portal.portal_layout">
-        <xpath expr="//div[hasclass('o_portal_wrap')]" position="attributes">
-            <attribute name="style">background-image: url('/portal_orders/static/description/chemistry.png');
-                background-size: cover; height: 200%;
-            </attribute>
-        </xpath>
-    </template>-->
+    <!--<template id="custom_portal_my_home_bg" inherit_id="portal.portal_layout">
+       <xpath expr="//div[hasclass('o_portal_wrap')]" position="attributes">
+           <attribute name="style">background-image: url('/portal_orders/static/description/chemistry.png');
+               background-size: cover; height: 200%;
+           </attribute>
+       </xpath>
+   </template>-->
 
     <template id="sale_order_portal_content_sale" inherit_id="sale.sale_order_portal_content">
         <xpath expr="//div[@id='content']" position="attributes">
@@ -257,11 +411,9 @@
     </template>
 
 
-
-
     <template id="custom_portal_my_home_video" inherit_id="portal.side_content">
         <xpath expr="//a[text()=' Edit information']" position="after">
-            <iframe width="360" height="315" src="https://www.youtube.com/embed/ZAeqG-woHKc"  frameborder="0"
+            <iframe width="360" height="315" src="https://www.youtube.com/embed/ZAeqG-woHKc" frameborder="0"
                     allowfullscreen="" style="margin-top:20px;"></iframe>
         </xpath>
     </template>
@@ -270,19 +422,19 @@
         <xpath expr="//div[@id='portal_alert_category']" position="replace"/>
     </template>
 
-<!--    <template id="inherit_sale_order_buttons" inherit_id="sale.sale_order_portal_template">-->
-<!--        <xpath expr="//div[@class='o_download_pdf btn-toolbar flex-sm-nowrap']/div[@class='btn-group flex-grow-1 mb-1']"-->
-<!--               position="after">-->
-<!--            <div class="btn-group flex-grow-1 mb-1" style="padding-left: 6px;"-->
-<!--                 t-if="sale_order.option == 'pass'"> &lt;!&ndash; Add if condition here &ndash;&gt;-->
-<!--                    <a class="btn btn-secondary btn-block o_custom_btn"-->
-<!--                       title="Custom Action" t-attf-href="/portal/print_report">-->
-<!--                        <i class="fa fa-star"/>-->
-<!--                        <font color="white">Certification</font>-->
-<!--                    </a>-->
-<!--            </div>-->
-<!--        </xpath>-->
-<!--    </template>-->
+    <!--    <template id="inherit_sale_order_buttons" inherit_id="sale.sale_order_portal_template">-->
+    <!--        <xpath expr="//div[@class='o_download_pdf btn-toolbar flex-sm-nowrap']/div[@class='btn-group flex-grow-1 mb-1']"-->
+    <!--               position="after">-->
+    <!--            <div class="btn-group flex-grow-1 mb-1" style="padding-left: 6px;"-->
+    <!--                 t-if="sale_order.option == 'pass'"> &lt;!&ndash; Add if condition here &ndash;&gt;-->
+    <!--                    <a class="btn btn-secondary btn-block o_custom_btn"-->
+    <!--                       title="Custom Action" t-attf-href="/portal/print_report">-->
+    <!--                        <i class="fa fa-star"/>-->
+    <!--                        <font color="white">Certification</font>-->
+    <!--                    </a>-->
+    <!--            </div>-->
+    <!--        </xpath>-->
+    <!--    </template>-->
 
     <!--<template id="portal_my_home_sale" name="Show Quotations / Sales Orders" customize_show="True"
               inherit_id="portal.portal_my_home" priority="20">
@@ -304,10 +456,10 @@
                       enctype="multipart/form-data">
                     <input type="hidden" name="csrf_token"
                            t-att-value="request.csrf_token()"/>
-                    <div class="container" style="height: 1055px;">
+                    <div class="container" style="height: 1055px">
                         <div>
                             <button id="action_save"
-                                    class="btn btn-primary form-create_sale_order">Save
+                                    class="btn btn-primary form-create_sale_order">Submit
                             </button>
 
                             <a role="button" id="Discord"
@@ -322,7 +474,8 @@
                                     <div class="left_data" style="width: 50%;">
                                         <div class="cust_name">
                                             <label>Requested By</label>
-                                            <input list="brow" name="partner" readonly="readonly" class="given_cust" t-att-id="'cust'" t-att-value="request.env.user.name">
+                                            <input list="brow" name="partner" readonly="readonly" class="given_cust"
+                                                   t-att-id="'cust'" t-att-value="request.env.user.name">
                                                 <datalist id="brow">
                                                     <t t-foreach="customer_id.filtered(lambda c: c.name == request.env.user.name)"
                                                        t-as="customer">
@@ -337,18 +490,41 @@
                                             <label>Test Result</label>
                                             <input type="text" class="test_input" name="test_result"/>
                                         </div>-->
-                                        <div class="batch_number">
+                                        <!--<div class="batch_number">
                                             <label>Batch number</label>
                                             <input type="text" class="batch_number_input" name="batch_number"
                                                    />
-                                        </div>
+                                        </div>-->
                                         <div class="production_date">
-                                            <label style="margin-right: 5px;">Production date<br></br>
+                                            <label style="margin-right: 5px;">Collection Date
+                                                <br></br>
                                             </label>
                                             <input type="date" class="production_date_input"
                                                    name="production_date"
                                                    t-att-value="production_date"
                                                    t-att-id="'production_date'"></input>
+                                        </div>
+                                        <div class="production_date">
+                                            <label style="position: absolute;">Special Requirements</label>
+                                            <!--<select class="price_list" name="price"
+                                                    t-att-value="price" t-att-id="'price'" required="required">
+                                                <option></option>
+                                                <t t-foreach="price_id" t-as="price">
+                                                    <option class="options" t-att-value="price.id"
+                                                            t-esc="price.name">
+                                                    </option>
+                                                </t>
+                                            </select>-->
+                                            <textarea type="text" class="price_list_des" name="special_requirements"
+                                                      t-att-value="des"
+                                                      t-att-id="'des'"
+                                                      style="height:90px; resize: none ;margin-left: 160px;width:267px"></textarea>
+                                        </div>
+                                        <div class="production_date">
+                                            <label>PO Number</label>
+                                            <input type="text" class="po_number_input"
+                                                   name="po_number" t-att-value="po_number"
+                                                   t-att-id="'po_number'"></input>
                                         </div>
                                         <!--<div class="batch_number">
                                             <label style="margin-right: 22px;">Test Result</label>
@@ -361,7 +537,7 @@
                                                 <option value="fail" t-att-selected="test_result == 'fail'">Fail</option>
                                             </select>
                                         </div>-->
-                                        <div class="batch_number">
+                                        <!--<div class="batch_number">
                                             <label>Test Parameter 1</label>
                                             <input type="text" class="test_des" name="test_parameter_1"
                                                    />
@@ -390,7 +566,7 @@
                                             <label>Test Parameter 6</label>
                                             <input type="text" class="test_des" name="test_parameter_6"
                                                    />
-                                        </div>
+                                        </div>-->
 
 
                                     </div>
@@ -399,16 +575,16 @@
                                         <div class="Analysis_Request_Date">
                                             <label>Analysis Request Date</label>
                                             <input type="date" class="Analysis_Request_Date_input"
-                                                   name="Analysis_Request_Date"  t-att-value="Analysis_Request_Date"
+                                                   name="Analysis_Request_Date" t-att-value="Analysis_Request_Date"
                                                    t-att-id="'expire'"></input>
                                         </div>
-                                        <div class="quotation">
+                                        <!--<div class="quotation">
                                             <label style="margin-right: 100px;">Use By Date</label>
                                             <input type="date" class="quotation_date"
                                                    name="use_by_date"
                                                    t-att-value="use_by_date"
                                                    t-att-id="'use_by_date'"></input>
-                                        </div>
+                                        </div>-->
                                         <!--<div class="collection_delivery">
                                             <label style="margin-right: 50px;">Collection/Delivery</label>
                                             <select class="collection_delivery_input"
@@ -435,21 +611,27 @@
                                         </div>
 
                                         <!-- New text input field for Collect Address -->
-                                       <div class="collection_delivery" id="collect_address_field" style="display: none; margin-top: 20px;">
-                                        <label for="collect_address" style="margin-right: 70px;">Collect Address</label>
-                                        <textarea id="collect_address" name="collect_address" class="collection_delivery_input" placeholder="Enter collect address" style="resize: none;height: 80px;"></textarea>
-                                    </div>
+                                        <div class="collection_delivery" id="collect_address_field"
+                                             style="display: none; margin-top: 20px;">
+                                            <label for="collect_address" style="margin-right: 73px;">Collect Address
+                                            </label>
+                                            <textarea id="collect_address" name="collect_address"
+                                                      class="collection_delivery_input"
+                                                      placeholder="Enter collect address"
+                                                      style="resize: none;height: 80px;"></textarea>
+                                        </div>
 
                                         <script>
                                             function toggleCollectAddressField() {
-                                                var collectionDeliverySelect = document.getElementById('collection_delivery');
-                                                var collectAddressField = document.getElementById('collect_address_field');
+                                            var collectionDeliverySelect =
+                                            document.getElementById('collection_delivery');
+                                            var collectAddressField = document.getElementById('collect_address_field');
 
-                                                if (collectionDeliverySelect.value === 'collection') {
-                                                    collectAddressField.style.display = 'block';
-                                                } else {
-                                                    collectAddressField.style.display = 'none';
-                                                }
+                                            if (collectionDeliverySelect.value === 'collection') {
+                                            collectAddressField.style.display = 'block';
+                                            } else {
+                                            collectAddressField.style.display = 'none';
+                                            }
                                             }
 
                                             // Initial call to set the correct visibility based on the preselected value
@@ -464,30 +646,28 @@
 
                                             </input>&ndash;&gt;
                                             <select class="requested_by_input" name="requested_by" id="requested_by" required="required/">
-											<option></option>
-											<t t-foreach="customer_id" t-as="customer">
-												<option t-att-value="customer.id">
-													<t t-esc="customer.name" />
-												</option>
-											</t>
-										</select>
+                                  <option></option>
+                                  <t t-foreach="customer_id" t-as="customer">
+                                     <option t-att-value="customer.id">
+                                        <t t-esc="customer.name" />
+                                     </option>
+                                  </t>
+                               </select>
                                         </div>-->
                                         <!--<div class="cust_name">
-										<label>Customer Name</label>
-										<select class="given_cust" name="partners_name" id="partners_name" required="required">
-											<option></option>
-											<t t-foreach="customer_id" t-as="customer">
-												<option t-att-value="customer.id">
-													<t t-esc="customer.name" />
-												</option>
-											</t>
-										</select>
-									</div>-->
+                               <label>Customer Name</label>
+                               <select class="given_cust" name="partners_name" id="partners_name" required="required">
+                                  <option></option>
+                                  <t t-foreach="customer_id" t-as="customer">
+                                     <option t-att-value="customer.id">
+                                        <t t-esc="customer.name" />
+                                     </option>
+                                  </t>
+                               </select>
+                            </div>-->
 
 
-
-
-                                        <div class="test_parameter_7">
+                                        <!--<div class="test_parameter_7">
                                             <label>Test Parameter 7</label>
                                             <input type="text" class="test_parameter_7_input" name="test_parameter_7"
                                                    />
@@ -505,25 +685,7 @@
                                         <div class="price">
                                             <label>Test Parameter 10</label>
                                             <input type="text" class="test_parameter_10_input" name="test_parameter_10"/>
-                                        </div>
-                                        <div class="price">
-                                            <label style="position: absolute;">Sample Description</label>
-                                            <!--<select class="price_list" name="price"
-                                                    t-att-value="price" t-att-id="'price'" required="required">
-                                                <option></option>
-                                                <t t-foreach="price_id" t-as="price">
-                                                    <option class="options" t-att-value="price.id"
-                                                            t-esc="price.name">
-                                                    </option>
-                                                </t>
-                                            </select>-->
-                                            <textarea type="text" class="price_list_des" name="sample_description" t-att-value="des"
-                                                   t-att-id="'des'" style="height:70px; resize: none ;margin-left: 195px;"></textarea>
-                                        </div>
-
-
-
-
+                                        </div>-->
 
 
                                         <!--<div class="price">
@@ -556,41 +718,320 @@
                                         </div>-->
                                     </div>
                                 </div>
+                                <!-- Modal HTML -->
+                                <div id="testModal" class="modal">
+                                    <div class="modal-content">
+                                        <span class="close"></span>
+                                        <!--<p>Product Name:<span id="modalProductName"></span></p>-->
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Product Name</th>
+                                                    <th>Tests</th>
+                                                    <th>Description</th>
+                                                    <th>Quantity</th>
+                                                    <!--<th>Uom</th>-->
+                                                    <th>Unit Price</th>
+                                                    <th>Vat</th>
+                                                    <th>Vat Amount</th>
+                                                    <th>Discount</th>
+                                                    <th>Subtotal</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody class="o_portal_sale_order_lines_tbody"
+                                                   id="order_lines_table_body_new">
+                                            </tbody>
+                                        </table>
+                                        <div>
+                                            <button type="button" class="btn btn-primary" id="new-add-line-btn"
+                                                    onclick="new_addLine()">Add a Line
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <script type="text/javascript">
+                                    function new_addLine() {
+                                    var table = document.getElementById('order_lines_table_body_new');
+                                    var row_id = table.rows.length;
+                                    var original_row_id = document.getElementById('current_row_id').value;
+                                    var row = table.insertRow(-1);
+                                    row.id = `row_${row_id}`;
+                                    row.innerHTML = `
+                                    <tr class="rows" id="row_ids">
+                                        <td>
+                                            <input type="hidden" name="original_row_id_${row_id}"
+                                                   value="${original_row_id}"/> <!-- Hidden input to store original row_id -->
+                                            ${original_row_id}
+                                        </td>
+                                        <td>
+                                            <input type="Char" class="form-control product_id"
+                                                   name="product_name_${row_id}" list="my-options"
+                                                   onchange="onDescriptionChangenew(this.value, ${row_id})">
+                                                <datalist class="product_id" id="my-options"
+                                                >
+                                                    <option></option>
+                                                    <t t-foreach="product_id" t-as="product">
+                                                        <option>
+                                                            <t t-esc="product.default_code"></t>
+                                                            <t t-esc="product.name"></t>
+                                                            <t t-esc="{product.lst_price}"></t>
+                                                            <t t-esc="[product.uom_id.name]"></t>
+                                                        </option>
+                                                    </t>
+                                                </datalist>
+                                            </input>
+                                        </td>
+                                        <td>
+                                            <input type="Char" name="description_${row_id}"
+                                                   id="new_description_${row_id}" class="form-control"/>
+                                        </td>
+                                        <td>
+                                            <input type="number" name="qty_${row_id}" value="1" id="new_qty_${row_id}"
+                                                   class="form-control quantity"
+                                                   onchange="new_onQty(this.value, ${row_id})"/>
+                                        </td>
+                                        <td hidden="true">
+                                            <input type="Char" id="new_product_uom_${row_id}"
+                                                   name="product_uom_${row_id}" list="uom-options" class="form-control">
+                                                <datalist id="uom-options">
+                                                    <option></option>
+                                                    <!-- Options should be added here -->
+                                                </datalist>
+                                            </input>
+                                        </td>
+                                        <td>
+                                            <input type="Float" name="price_unit_${row_id}"
+                                                   id="new_price_unit_${row_id}" class="form-control"
+                                                   onchange="new_onUnitPrice(this.value, ${row_id})"/>
+                                        </td>
+                                        <!--<td>
+                                            <div>
+                                                <select multiple="multiple" name="childrentaxids_${row_id}"
+                                                        class="form-control chosen dt_cq children_tax_ids dt_select_text tax_${row_id}"
+                                                        id="children_tax_id_${row_id}"
+                                                        onchange="newonTaxChange(${row_id})">
+                                                    &lt;!&ndash; Options should be added here &ndash;&gt;
+                                                </select>
+                                            </div>
+                                        </td>-->
+                                        <td>
+                                            <div>
+                                                <select
+                                                        name="childrentaxids_${row_id}"
+                                                        class="form-control chosen dt_cq children_tax_ids dt_select_text tax_${row_id}"
+                                                        t-att-id="'children_tax_id_${row_id}'"
+                                                        onchange="newonTaxChange(${row_id})" >
+
+                                                    <t t-foreach='children_tax_ids' t-as="tax_id_get">
+                                                        <option t-esc="tax_id_get.name"
+                                                                t-att-value="tax_id_get.id"
+                                                                t-if="tax_id_get.name == '20%'"
+                                                                selected="selected">
+                                                        </option>
+                                                        <option t-else=""
+                                                                t-esc="tax_id_get.name"
+                                                                t-att-value="tax_id_get.id">
+                                                        </option>
+                                                    </t>
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <input type="Float" name="vat_amount_${row_id}" id="vat_amount_${row_id}"
+                                                   class="form-control" value="20" disabled="disabled"/>
+                                        </td>
+                                        <td hidden="true">
+                                            <input class="form-control prod_empty_user_${row_id}" type="text"
+                                                   name="tax_emp_${row_id}" id="newtax_emp_${row_id}"/>
+                                        </td>
+                                        <!--<td>
+                                            <input type="Float" name="vat_amount_${row_id}" id="vat_amount_${row_id}"
+                                                   class="form-control" value="20" disabled="disabled"/>
+                                        </td>-->
+                                        <td>
+                                            <input type="Float" name="discount_${row_id}" id="newdiscount_${row_id}"
+                                                   class="form-control" onchange="new_discountLine(${row_id})"/>
+                                        </td>
+                                        <td>
+                                            <input type="Float" name="price_subtotal_${row_id}"
+                                                   id="new_subtotal_${row_id}" class="form-control"/>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger"
+                                                    onclick="new_removeLine(${row_id})">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    `;
+                                    }
+
+                                    function new_onQty(quantity, row_id) {
+                                    var quantity = document.getElementById(`new_qty_${row_id}`).value;
+                                    var price = document.getElementById(`new_price_unit_${row_id}`).value;
+                                    var subtotal = quantity * price + 20;
+                                    document.getElementById(`new_subtotal_${row_id}`).value = subtotal;
+                                    var discount = document.getElementById(`newdiscount_${row_id}`).value / 100 *
+                                    subtotal;
+                                    var total = subtotal - discount;
+                                    document.getElementById(`new_subtotal_${row_id}`).value = total;
+                                    }
+
+                                    function new_onUnitPrice(unitPrice, row_id) {
+                                    console.log("unitPrice", unitPrice);
+                                    }
+
+                                    // Set default tax ID to 3
+                                    var taxDropdown = document.querySelector(`#row_${row_id} .tax_${row_id}`);
+                                    if (taxDropdown) {
+                                    taxDropdown.value = '3';
+                                    newonTaxChange(row_id); // Trigger change event to set hidden field
+                                    }
+
+                                    function onDescriptionChangenew(product_id, row_id) {
+                                    const products = product_id;
+                                    if (products != '') {
+                                    const str = product_id;
+                                    console.log("str", str);
+                                    const ans = str.split('{');
+                                    const ansvar = ans[1];
+                                    const ans2 = ansvar.split('}');
+                                    const final = ans2[0];
+                                    const uom = str.split("['");
+                                    const uomvar = uom[1];
+                                    const uom2 = uomvar.split("']");
+                                    const uom_final = uom2[0];
+                                    var descriptions = {
+                                    'product': product_id,
+                                    'price': final,
+                                    'uom': uom_final
+                                    };
+                                    document.getElementById(`new_qty_${row_id}`).value = 1;
+                                    document.getElementById(`new_description_${row_id}`).value =
+                                    descriptions['product'];
+                                    document.getElementById(`new_price_unit_${row_id}`).value = descriptions['price'];
+                                    document.getElementById(`new_product_uom_${row_id}`).value = descriptions['uom'];
+                                    document.getElementById(`new_subtotal_${row_id}`).value = descriptions['price'];
+                                    var price = parseFloat(descriptions['price']);
+                                    var subtotal = price + 20; // Adding the VAT amount of 20
+                                    document.getElementById(`new_subtotal_${row_id}`).value = subtotal;
+                                    }
+                                    }
+
+                                    function newonTaxChange(row_id) {
+                                    var UserIds = $(`.tax_${row_id}`).val();
+                                    document.getElementById(`newtax_emp_${row_id}`).value = UserIds;
+                                    }
+
+                                    function new_discountLine(row_id) {
+                                    var quantity = document.getElementById(`new_qty_${row_id}`).value;
+                                    var price = document.getElementById(`new_price_unit_${row_id}`).value;
+                                    var subtotal = quantity * price;
+                                    document.getElementById(`new_subtotal_${row_id}`).value = subtotal;
+                                    var discount = document.getElementById(`newdiscount_${row_id}`).value / 100 *
+                                    subtotal;
+                                    var total = subtotal - discount;
+                                    document.getElementById(`new_subtotal_${row_id}`).value = total;
+                                    }
+
+                                    function new_removeLine(row_id) {
+                                    document.getElementById(`row_${row_id}`).remove();
+                                    }
+                                </script>
+
+
+                                <style>
+                                    /* Modal styles */
+                                    .modal {
+                                    display: none;
+                                    position: fixed;
+                                    z-index: 1;
+                                    left: 0;
+                                    top: 0;
+                                    width: 100%;
+                                    height: 100%;
+                                    overflow: auto;
+                                    background-color: rgb(0, 0, 0);
+                                    background-color: rgba(0, 0, 0, 0.4);
+                                    }
+
+                                    .modal-content {
+                                    background-color: #fefefe;
+                                    margin: 15% auto;
+                                    padding: 20px;
+                                    border: 1px solid #888;
+                                    width: 80%;
+                                    }
+
+                                    .close {
+                                    color: #aaa;
+                                    float: right;
+                                    font-size: 28px;
+                                    font-weight: bold;
+                                    }
+
+                                    .close:hover,
+                                    .close:focus {
+                                    color: black;
+                                    text-decoration: none;
+                                    cursor: pointer;
+                                    }
+                                </style>
+
                                 <div class="card-body">
                                     <div class="o_portal_sale_order_lines">
                                         <div class="oe_structure oe_structure_no_spacing">
                                             <div class="oe_notebook">
-                                                <br/> <!-- Add some space here -->
-                                                <br/> <!-- Add some space here -->
-                                                <br/> <!-- Add some space here -->
-                                                <br/> <!-- Add some space here -->
-                                                <br/> <!-- Add some space here --><br/> <!-- Add some space here -->
-                                                <br/> <!-- Add some space here -->
-                                                <br/> <!-- Add some space here -->
+                                                <!--<br/>
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                                <br/>-->
                                                 <div class="oe_notebook_headers">
-                                                    <p class="tab_name">Order Lines</p>
+                                                    <p>
+                                                        <strong>
+                                                            <u>Products/Samples</u>
+                                                        </strong>
+                                                    </p>
                                                 </div>
                                                 <div class="oe_notebook_content">
-                                                    <div class="oe_notebook_page tab-pane active"
-                                                         role="tabpanel">
+                                                    <div class="oe_notebook_page tab-pane active" role="tabpanel">
                                                         <div class="o_portal_sale_order_lines_list">
-                                                            <table class="table">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>Product</th>
-                                                                        <th>Description</th>
-                                                                        <th>Quantity</th>
-                                                                        <th>Uom</th>
-                                                                        <th>Unit Price</th>
-                                                                        <th>Taxes</th>
-                                                                        <th>Discount</th>
-                                                                        <th>Subtotal</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody class="o_portal_sale_order_lines_tbody"
-                                                                       id="order_lines_table_body">
-                                                                </tbody>
-                                                            </table>
+                                                            <div style="overflow-x: auto;">
+                                                                <table class="table">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Product Name</th>
+                                                                            <th>Sample Number</th>
+                                                                            <th>Use By Date</th>
+                                                                            <th>Sample Description</th>
+                                                                            <th>Product Description</th>
+                                                                            <th>Batch Number</th>
+                                                                            <th>Production Date</th>
+                                                                            <th>Test Parameter1</th>
+                                                                            <th>Test Parameter2</th>
+                                                                            <th>Test Parameter3</th>
+                                                                            <th>Test Parameter4</th>
+                                                                            <th>Test Parameter5</th>
+                                                                            <th>Test Parameter6</th>
+                                                                            <th>Test Parameter7</th>
+                                                                            <th>Test Parameter8</th>
+                                                                            <th>Test Parameter9</th>
+                                                                            <th>Test Parameter10</th>
+                                                                            <!--<th>RowID</th>
+                                                                            <th>Actions</th>-->
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody class="o_portal_sale_order_lines_tbody"
+                                                                           id="order_lines_table_body">
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
                                                             <button type="button" class="btn btn-primary"
                                                                     id="add-line-btn" onclick="addLine()">Add a Line
                                                             </button>
@@ -600,105 +1041,93 @@
                                                             function addLine() {
                                                             var table =
                                                             document.getElementById('order_lines_table_body');
-                                                            var
-                                                            row_id = table.rows.length;
+                                                            var row_id = table.rows.length;
                                                             var row = table.insertRow(-1);
                                                             row.id = `row_${row_id}`;
                                                             row.innerHTML = `
-                                                            <tr class="rows" id="row_ids">
+                                                            <tr class="rows" id="row_${row_id}">
                                                                 <td>
-                                                                    <input type="Char" class="form-control product_id"
-                                                                           name="product_name_${row_id}" list="my-options"
-                                                                           onchange="onDescriptionChange(this.value, ${row_id})">
-                                                                        <datalist class="product_id" id="my-options"
-                                                                        >
-                                                                            <option></option>
-                                                                            <t t-foreach="product_id" t-as="product">
-                                                                                <option>
-                                                                                    <t t-esc="product.default_code"></t>
-                                                                                    <t t-esc="product.name"></t>
-                                                                                    <t t-esc="{product.lst_price}"></t>
-                                                                                    <t t-esc="[product.uom_id.name]"></t>
-                                                                                </option>
-                                                                            </t>
-                                                                        </datalist>
-                                                                    </input>
+                                                                    <input type="text" class="product_name_input"
+                                                                           name="section_two_${row_id}"
+                                                                           id="product_name_${row_id}"/>
                                                                 </td>
                                                                 <td>
-                                                                    <input type="Char" name="description_${row_id}"
-                                                                           t-att-id="'description_${row_id}'"
-                                                                           class="form-control"/>
+                                                                    <input type="text"
+                                                                           class="osl_sample_number_ol_input"
+                                                                           name="osl_sample_number_ol_${row_id}"/>
                                                                 </td>
-                                                                <td>
-                                                                    <input type="number" name="qty_${row_id}" value="1"
-                                                                           t-att-id="'qty_${row_id}'"
-                                                                           class="form-control quantity"
-                                                                           onchange="onQty(this.value, ${row_id})"/>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="Char" id="product_uom_${row_id}"
-                                                                           name="product_uom_${row_id}" list="uom-options"
-                                                                           class="form-control">
 
-                                                                        <datalist id="uom-options"
-                                                                        >
-                                                                            <option></option>
-                                                                            <t t-foreach="product_uom_id"
-                                                                               t-as="product_uom">
-                                                                                <option>
-                                                                                    <t t-esc="product_uom.name"></t>
-                                                                                </option>
-                                                                            </t>
-                                                                        </datalist>
-                                                                    </input>
+                                                                <td>
+                                                                    <input type="date" class="use_by_date_ol_input"
+                                                                           name="use_by_date_ol_${row_id}"/>
                                                                 </td>
                                                                 <td>
-                                                                    <input type="Float" name="price_unit_${row_id}"
-                                                                           t-att-id="'price_unit_${row_id}'"
-                                                                           onchange="onUnitPrice(this.value, ${row_id})"
-                                                                           class="form-control"/>
+                                                                    <input type="text" class="sample_description_input"
+                                                                           name="sample_description_${row_id}"/>
                                                                 </td>
                                                                 <td>
-                                                                    <div>
-                                                                        <select multiple="multiple"
-                                                                                name="childrentaxids_${row_id}"
-                                                                                class="form-control chosen dt_cq children_tax_ids dt_select_text tax_${row_id}"
-                                                                                t-att-id="'children_tax_id_${row_id}'"
-                                                                                onchange="onTaxChange(${row_id})">
-
-                                                                            <t t-foreach='children_tax_ids'
-                                                                               t-as="tax_id_get">
-                                                                                <option t-esc='tax_id_get.name'
-                                                                                        t-att-value='tax_id_get.id'/>
-                                                                                <!-- <t t-esc="[tax_id_get.amount]"></t> -->
-
-
-                                                                            </t>
-                                                                        </select>
+                                                                    <input type="text" class="product_description_input"
+                                                                           name="product_description_${row_id}"/>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="batch_number_ol">
+                                                                        <input type="text" class="batch_number_ol_input"
+                                                                               name="batch_number_ol_${row_id}"/>
                                                                     </div>
                                                                 </td>
-                                                                <td class="prod_empty_user" hidden="hidden">
-                                                                    <input
-                                                                            class="form-control prod_empty_user_${row_id}"
-                                                                            type="text" hidden="hidden"
-                                                                            name="tax_emp_${row_id}"
-                                                                            t-att-id="'tax_emp_${row_id}'"/>
-                                                                </td>
-
                                                                 <td>
-                                                                    <input type="Float" name="discount_${row_id}"
-                                                                           t-att-id="'discount_${row_id}'" id="discount"
-                                                                           class="form-control"
-                                                                           onchange="discountLine(${row_id})"/>
+                                                                    <input type="date" class="production_date_ol_input"
+                                                                           name="production_date_ol_${row_id}"/>
                                                                 </td>
                                                                 <td>
-                                                                    <input type="Float"
-                                                                           name="price_subtotal_${row_id}"
-                                                                           t-att-id="'subtotal_${row_id}'" id="subtotal"
-                                                                           class="form-control"/>
+                                                                    <input type="text" class="test_parameter1_ol_input"
+                                                                           name="test_parameter1_ol_${row_id}"/>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" class="test_parameter2_ol_input"
+                                                                           name="test_parameter2_ol_${row_id}"/>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" class="test_parameter3_ol_input"
+                                                                           name="test_parameter3_ol_${row_id}"/>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" class="test_parameter4_ol_input"
+                                                                           name="test_parameter4_ol_${row_id}"/>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" class="test_parameter5_ol_input"
+                                                                           name="test_parameter5_ol_${row_id}"/>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" class="test_parameter6_ol_input"
+                                                                           name="test_parameter6_ol_${row_id}"/>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" class="test_parameter7_ol_input"
+                                                                           name="test_parameter7_ol_${row_id}"/>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" class="test_parameter8_ol_input"
+                                                                           name="test_parameter8_ol_${row_id}"/>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" class="test_parameter9_ol_input"
+                                                                           name="test_parameter9_ol_${row_id}"/>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" class="test_parameter10_ol_input"
+                                                                           name="test_parameter10_ol_${row_id}"/>
                                                                 </td>
 
-
+                                                                <!--<td>${row_id}</td>-->
+                                                                <td>
+                                                                    <button type="button" class="btn btn-primary"
+                                                                            style="width: 100px;" id="add-test-btn"
+                                                                            onclick="showTestModal(${row_id})">
+                                                                        Add Test
+                                                                    </button>
+                                                                </td>
                                                                 <td>
                                                                     <button type="button" class="btn btn-danger"
                                                                             onclick="removeLine(${row_id})">
@@ -709,103 +1138,50 @@
                                                             `;
                                                             }
 
-                                                            function onQty(quantity,row_id) {
-                                                            var quantity =
-                                                            document.getElementById(`qty_${row_id}`).value
-                                                            var price =
-                                                            document.getElementById(`price_unit_${row_id}`).value
-                                                            var
-                                                            subtotal = quantity * price
-                                                            document.getElementById(`subtotal_${row_id}`).value
-                                                            =
-                                                            subtotal
-                                                            var discount =
-                                                            document.getElementById(`discount_${row_id}`).value/100*subtotal
-                                                            var total = subtotal - discount
-                                                            var subtotal =
-                                                            document.getElementById(`subtotal_${row_id}`).value
-                                                            =
-                                                            total
+                                                            function showTestModal(row_id) {
+                                                            var modal = document.getElementById("testModal");
+                                                            var span = document.getElementsByClassName("close")[0];
+
+                                                            // Retrieve the product name for the specific row
+                                                            var productName =
+                                                            document.getElementById(`product_name_${row_id}`).value;
+
+                                                            <!--// Update the modal content with the product name
+                                                            document.getElementById('modalProductName').textContent =
+                                                            productName;-->
+
+                                                            modal.style.display = "block";
+
+                                                            span.onclick = function () {
+                                                            modal.style.display = "none";
                                                             }
 
-                                                            function onUnitPrice(unitPrice,row_id) {
-                                                            console.log("unitPrice",unitPrice)
+                                                            window.onclick = function (event) {
+                                                            if (event.target == modal) {
+                                                            modal.style.display = "none";
+                                                            }
                                                             }
 
-                                                            function onDescriptionChange(product_id,row_id) {
-                                                            const products = product_id
-                                                            if (products != ''){
-                                                            const str =
-                                                            product_id;
-                                                            console.log("str",str)
-                                                            const ans = str.split('{')
-                                                            const ansvar = ans[1]
-                                                            const ans2 = ansvar.split('}')
-                                                            const final = ans2[0]
-                                                            const
-                                                            uom = str.split("['")
-                                                            const uomvar = uom[1]
-                                                            const uom2 =
-                                                            uomvar.split("']")
-                                                            const uom_final = uom2[0]
-                                                            var
-                                                            descriptions = {
-                                                            'product': product_id,
-                                                            'price': final,
-                                                            'uom': uom_final
-                                                            };
-                                                            document.getElementById(`qty_${row_id}`).value = 1
-                                                            document.getElementById(`description_${row_id}`).value =
-                                                            descriptions['product'];
-                                                            document.getElementById(`price_unit_${row_id}`).value =
-                                                            descriptions['price'];
-                                                            document.getElementById(`product_uom_${row_id}`).value =
-                                                            descriptions['uom'];
-                                                            document.getElementById(`subtotal_${row_id}`).value
-                                                            =
-                                                            descriptions['price']
-                                                            }
-                                                            }
-                                                            function onTaxChange(row_id){
-
-                                                            var UserIds = $(`.tax_${row_id}`).val()
-                                                            document.getElementById(`tax_emp_${row_id}`).value
-                                                            =UserIds
-                                                            }
-
-                                                            function discountLine(row_id) {
-                                                            var quantity =
-                                                            document.getElementById(`qty_${row_id}`).value
-                                                            var price =
-                                                            document.getElementById(`price_unit_${row_id}`).value
-                                                            var
-                                                            subtotal = quantity * price
-                                                            document.getElementById(`subtotal_${row_id}`).value
-                                                            =
-                                                            subtotal
-                                                            var discount =
-                                                            document.getElementById(`discount_${row_id}`).value/100*subtotal
-                                                            var total = subtotal - discount
-                                                            var subtotal =
-                                                            document.getElementById(`subtotal_${row_id}`).value
-                                                            =
-                                                            total
+                                                            // Store the row_id in a hidden input to use later
+                                                            document.getElementById('current_row_id').value =
+                                                            productName;
                                                             }
 
                                                             function removeLine(row_id) {
                                                             document.getElementById(`row_${row_id}`).remove();
-                                                            }
-                                                            function discordBtn(){
-                                                            window.location.href = '/my/orders#'
                                                             }
                                                         </script>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
                                 </div>
+
+                                <!-- Hidden input to store current row ID -->
+                                <input type="hidden" id="current_row_id" value=""/>
+
                             </div>
-                        </div>
                         </div>
                     </div>
                 </form>
@@ -828,7 +1204,7 @@
                 <t t-call="portal.portal_table">
                     <thead>
                         <tr>
-                            <th>Sales Order #</th>
+                            <th>Work Order #</th>
                             <th class="text-end">Order Date</th>
                             <th class="text-end">Total</th>
                         </tr>
@@ -839,7 +1215,7 @@
                             <tr t-if="groupby != 'none'" class="table-light">
                                 <th t-attf-colspan="{{3}}">
                                     <span t-esc="groupby == 'amount_total' and 'Amount Total' or
-                                                 groupby == 'sam_received_date' and 'Use By Date' or
+                                                 groupby == 'product_ids.use_by_date_line' and 'Use By Date' or
                                                  groupby == 'date_order' and 'Order Date' or
                                                  groupby == 'option' and 'Test Result' or
                                                  groupby == 'por_batch_number' and 'Batch Number'"/>
@@ -854,12 +1230,16 @@
                         <tbody t-foreach="group['orders']" t-as="order">
                             <tr>
                                 <td class="text-start">
-                                    <a t-att-href="order.get_portal_url()"><t t-out="order.name"/></a>
+                                    <a t-att-href="order.get_portal_url()">
+                                        <t t-out="order.name"/>
+                                    </a>
                                 </td>
                                 <td class="text-end">
                                     <span t-field="order.date_order" t-options="{'widget': 'date'}"/>
                                 </td>
-                                <td class="text-end"><span t-field="order.amount_total"/></td>
+                                <td class="text-end">
+                                    <span t-field="order.amount_total"/>
+                                </td>
                             </tr>
                         </tbody>
                     </t>
