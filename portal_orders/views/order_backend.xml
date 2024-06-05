@@ -59,8 +59,8 @@
                     <field name="relevant_temperatures"/>
                     <field name="collection_or_delivery"/>
                     <field name="collection_address" invisible = "collection_or_delivery != 'collection'"/>
-                    <field name="sample_delivery_date"/>
                     <field name="sample_start_date"/>
+                    <field name="sample_delivery_date"/>
                     <field name="sample_ref"/>
                     <field name="date_of_result"/>
                     <!--<field name="option"/>-->

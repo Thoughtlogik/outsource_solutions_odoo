@@ -26,9 +26,9 @@
 
     <template id="custom_portal_batch_number" inherit_id="sale.portal_my_orders">
         <xpath expr="//span[hasclass('d-md-inline')]" position="after">
-            <th class="text-end" t-if="groupby != 'amount_total'">
+            <!--<th class="text-end" t-if="groupby != 'amount_total'">
                 <span class='d-none d-md-inline'>Batch Number</span>
-            </th>
+            </th>-->
             <th class="text-end" t-if="groupby != 'amount_total'">
                 <span class='d-none d-md-inline'>PO Number</span>
             </th>
@@ -40,9 +40,9 @@
             <span class='d-none d-md-inline'>Work Order #</span>
         </xpath>
         <xpath expr="//t[@t-out='order.name']" position="after">
-            <td class="text-end" t-if="groupby != 'amount_total'">
+            <!--<td class="text-end" t-if="groupby != 'amount_total'">
                 <t t-out="order.por_batch_number"/>
-            </td>
+            </td>-->
             <td class="text-end" t-if="groupby != 'amount_total'">
                 <t t-out="order.po_number"/>
             </td>
@@ -304,7 +304,7 @@
                 <div class="col-md-6"> <!-- Adjust the column width as needed -->
                     <a role="button" class="btn btn-primary"
                        t-attf-href="/orders" data-action="create-quotation"
-                       data-model="sale.order">Create Order
+                       data-model="sale.order">Create Work Order
                     </a>
                 </div>
                 <div class="col-md-6" style="text-align: right;"> <!-- Adjust the column width as needed -->
