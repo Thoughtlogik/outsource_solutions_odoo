@@ -22,10 +22,10 @@ class CustomerPortal(payment_portal.PaymentPortal):
     def portal_my_orders(self, **kwargs):
         super(CustomerPortal, self).portal_my_orders()
         values = self._prepare_sale_portal_rendering_values(quotation_page=False, **kwargs)
-        print("values final sales->",values)
+        # print("values final sales->",values)
         request.session['my_orders_history'] = values['orders'].ids[:100]
         groupby = values.get('groupby')
-        print("base groupby1111->", groupby)
+        # print("base groupby1111->", groupby)
         if groupby != 'none':
             return request.render("portal_orders.portal_tasks_list_sale_groupby", values)
         return request.render("sale.portal_my_orders", values)
@@ -34,7 +34,7 @@ class CustomerPortal(payment_portal.PaymentPortal):
             self, page=1, date_begin=None, date_end=None, sortby=None, filterby=None, search=None, search_in='content',
             groupby=None, quotation_page=False, **kwargs
     ):
-        print("custom def2-->")
+        # print("custom def2-->")
         super(CustomerPortal, self)._prepare_sale_portal_rendering_values()
         if not groupby:
             groupby = 'none'
@@ -58,7 +58,7 @@ class CustomerPortal(payment_portal.PaymentPortal):
         domain = searchbar_filters.get(filterby, searchbar_filters.get('all'))['domain']
         values = self._prepare_tasks_values_new(page, date_begin, date_end, sortby, search, search_in, groupby,
                                                 domain=domain)
-        print("valuesGRP->", values)
+        # print("valuesGRP->", values)
         partner = request.env.user.partner_id
 
         if quotation_page:
@@ -87,9 +87,9 @@ class CustomerPortal(payment_portal.PaymentPortal):
             url_args={'date_begin': date_begin, 'date_end': date_end, 'sortby': sortby,
                       'filterby': filterby, 'groupby': groupby},
         )
-        print("pager_values sale->", pager_values)
+        # print("pager_values sale->", pager_values)
         orders = SaleOrder.search(domain, order=sort_order, limit=self._items_per_page, offset=pager_values['offset'], )
-        print("orders sale->", orders)
+        # print("orders sale->", orders)
 
         if filterby != 'all':
             domain = searchbar_filters[filterby]['domain']
@@ -130,7 +130,7 @@ class CustomerPortal(payment_portal.PaymentPortal):
                 date_order_list = [{'group_by_value': 'None', 'orders': [order]} for order in orders]
             else:
                 date_order_list = [{'group_by_value': getattr(order, groupby), 'orders': [order]} for order in orders]
-        print('------------------date_order_list', date_order_list)
+        # print('------------------date_order_list', date_order_list)
         values.update({
             'date': date_begin,
             'quotations': orders.sudo() if quotation_page else SaleOrder,
@@ -147,7 +147,7 @@ class CustomerPortal(payment_portal.PaymentPortal):
             'searchbar_inputs': self._sale_get_searchbar_inputs(),  # Add search bar inputs
             'grouped_tasks': date_order_list,
         })
-        print("orders values update->", values)
+        # print("orders values update->", values)
         return values
 
 
@@ -204,15 +204,15 @@ class CustomerPortal(payment_portal.PaymentPortal):
             'sam_received_date': {'label': _('Use By Date'), 'domain': [('product_ids.use_by_date_line', '!=', False)]},
             'date_order': {'label': _('Order Date'), 'domain': [('date_order', '!=', False)]},
         }
-        print("custom def3")
-        print("searchbar_filters", searchbar_filters)
+        # print("custom def3")
+        # print("searchbar_filters", searchbar_filters)
         projects = request.env['sale.order'].search(project_domain or [])
-        print("projects", projects)
+        # print("projects", projects)
         for project in projects:
             searchbar_filters.update({
                 str(project.id): {'label': project.name, 'domain': [('name', '=', project.name)]}
             })
-        print("searchbar_filters1", searchbar_filters)
+        # print("searchbar_filters1", searchbar_filters)
         return searchbar_filters
 
 
