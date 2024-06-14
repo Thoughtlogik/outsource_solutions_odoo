@@ -79,9 +79,94 @@
         <xpath expr="//th[@id='product_name_header']" position="before">
             <th class="text-start">Product Name</th>
         </xpath>
-        <xpath expr="//h3[@id='details_title' and text()='Order Detail']" position="replace">
+        <!--<xpath expr="//h3[@id='details_title' and text()='Order Detail']" position="replace">
             <h3 id="details_title">Test Request</h3>
+        </xpath>-->
+        <xpath expr="//t[@t-if='product_documents']" position="after">
+            <h3>Products/Samples</h3>
+            <table class="table table-sm">
+                <thead class="bg-100">
+                    <tr>
+                        <th style="width:10px;">Sample Number</th>
+                        <th style="width:10px; text-align:left;">Product</th>
+                        <th style="width:100px; text-align:left; white-space: nowrap;">Use By Date</th>
+                        <th style="width:10px; text-align:left;">Sample Description</th>
+                        <th style="width:10px; text-align:left;">Product Description</th>
+                        <th style="width:10px; text-align:left;">Batch Number</th>
+                        <th style="width:10px; text-align:left;">Production Date</th>
+                        <th style="width:10px; text-align:left;">Test Parameter 1</th>
+                        <th style="width:10px; text-align:left;">Test Parameter 2</th>
+                        <th style="width:10px; text-align:left;">Test Parameter 3</th>
+                        <th style="width:10px; text-align:left;">Test Parameter 4</th>
+                        <th style="width:10px; text-align:left;">Test Parameter 5</th>
+                        <th style="width:10px; text-align:left;">Test Parameter 6</th>
+                        <th style="width:10px; text-align:left;">Test Parameter 7</th>
+                        <th style="width:10px; text-align:left;">Test Parameter 8</th>
+                        <th style="width:10px; text-align:left;">Test Parameter 9</th>
+                        <th style="width:10px; text-align:left;">Test Parameter 10</th>
+                    </tr>
+                </thead>
+                <tbody class="sale_tbody">
+                    <t t-foreach="sale_order.product_ids" t-as="line">
+                        <tr>
+                            <td>
+                                <t t-esc="line.osl_sample_number"/>
+                            </td>
+                            <td>
+                                <t t-esc="line.product_name_line"/>
+                            </td>
+                            <td>
+                                <t t-esc="line.use_by_date_line"/>
+                            </td>
+                            <td>
+                                <t t-esc="line.sample_description"/>
+                            </td>
+                            <td>
+                                <t t-esc="line.product_description"/>
+                            </td>
+                            <td>
+                                <t t-esc="line.batch_num"/>
+                            </td>
+                            <td>
+                                <t t-esc="line.production_date"/>
+                            </td>
+                            <td>
+                                <t t-esc="line.test_parameter_1"/>
+                            </td>
+                            <td>
+                                <t t-esc="line.test_parameter_2"/>
+                            </td>
+                            <td>
+                                <t t-esc="line.test_parameter_3"/>
+                            </td>
+                            <td>
+                                <t t-esc="line.test_parameter_4"/>
+                            </td>
+                            <td>
+                                <t t-esc="line.test_parameter_5"/>
+                            </td>
+                            <td>
+                                <t t-esc="line.test_parameter_6"/>
+                            </td>
+                            <td>
+                                <t t-esc="line.test_parameter_7"/>
+                            </td>
+                            <td>
+                                <t t-esc="line.test_parameter_8"/>
+                            </td>
+                            <td>
+                                <t t-esc="line.test_parameter_9"/>
+                            </td>
+                            <td>
+                                <t t-esc="line.test_parameter_10"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+            <h3>Test Request</h3>
         </xpath>
+
         <!--<xpath expr="//th[@id='product_name_header']" position="before">
             <th class="text-start">sample description</th>
         </xpath>-->
@@ -115,7 +200,7 @@
             </td>
         </xpath>
     </template>-->
-    <template id="custom_sale_order_portal_content_custom_design" inherit_id="sale.sale_order_portal_content">
+    <!--<template id="custom_sale_order_portal_content_custom_design" inherit_id="sale.sale_order_portal_content">
         <xpath expr="//h3[@id='details_title']" position="before">
             <h3 id="details_title">Products/Samples</h3>
             <table class="table table-sm">
@@ -200,7 +285,7 @@
             </table>
 
         </xpath>
-    </template>
+    </template>-->
 
     <template id="custom_portal_sale_order_page" inherit_id="sale.sale_order_portal_content">
         <xpath expr="//div[hasclass('row')]" position="after">
@@ -822,7 +907,7 @@
                                                         name="childrentaxids_${row_id}"
                                                         class="form-control chosen dt_cq children_tax_ids dt_select_text tax_${row_id}"
                                                         t-att-id="'children_tax_id_${row_id}'"
-                                                        onchange="newonTaxChange(${row_id})" >
+                                                        onchange="newonTaxChange(${row_id})">
 
                                                     <t t-foreach='children_tax_ids' t-as="tax_id_get">
                                                         <option t-esc="tax_id_get.name"
@@ -1169,6 +1254,9 @@
 
                                                             function removeLine(row_id) {
                                                             document.getElementById(`row_${row_id}`).remove();
+                                                            }
+                                                            function discordBtn(){
+                                                            window.location.href = '/my/orders#'
                                                             }
                                                         </script>
                                                     </div>

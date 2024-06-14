@@ -45,7 +45,7 @@ class PortalSaleOrder(http.Controller):
 #get the values from sale order and create the new sale order
     @http.route('/create_sale_order', type='http', auth="user", website=True)
     def get_values_and_create(self, **post):
-        print("post-->",post)
+        # print("post-->",post)
         des = ''
         type = ''
         sale = ''
@@ -70,7 +70,7 @@ class PortalSaleOrder(http.Controller):
         for key, value in post.items():
             if key.startswith('product_name_'):
                 idx = key.split('_')[2]
-                print("idx->", idx)
+                # print("idx->", idx)
                 product_info[idx] = {'name': value,
                                      'description': post.get(f'description_{idx}'),
                                      'quantity': post.get(f'qty_{idx}'),
@@ -82,7 +82,7 @@ class PortalSaleOrder(http.Controller):
                                       'tax_ids': post.get(f'childrentaxids_{idx}'),
                                      'product_name': post.get(f'original_row_id_{idx}'),  # Retrieve original_row_id
                                      }
-                print('----------------------post', post)
+                # print('----------------------post', post)
                 product_line_info[idx] = {
                     'osl_sample_number': post.get(f'osl_sample_number_ol_{idx}'),
                     'product_name_line': post.get(f'section_two_{idx}'),
@@ -102,11 +102,11 @@ class PortalSaleOrder(http.Controller):
                     'test_parameter_9': post.get(f'test_parameter9_ol_{idx}'),
                     'test_parameter_10': post.get(f'test_parameter10_ol_{idx}')
                 }
-                print('----------------------product_line_info11', product_line_info)
+                # print('----------------------product_line_info11', product_line_info)
         order_lines = []
-        print("product_info->",product_info)
+        # print("product_info->",product_info)
         # print("product_info[idx]->", product_info[idx])
-        print("post.items->", post.items)
+        # print("post.items->", post.items)
         if product_info:
             # Maintain a set to track created section names
             created_sections = set()
@@ -150,10 +150,10 @@ class PortalSaleOrder(http.Controller):
                 # order_lines.append((0, 0, order_line))
                 order_lines.append((0,0,order_line))
         product_lines = []
-        print('----------------------product_line_info22', product_line_info)
+        # print('----------------------product_line_info22', product_line_info)
         if product_line_info:
             for idx, item in product_line_info.items():
-                print('--------------------------------------item', item)
+                # print('--------------------------------------item', item)
                 if item.get('product_name_line'):  # Check if product_name_line is not None
                     product_line = {
                         'osl_sample_number': item['osl_sample_number'] or None,  # Handle empty string for date
@@ -257,10 +257,10 @@ class PortalSaleOrder(http.Controller):
             # if post.get('quotation'):
             #     sale.update({'date_order': post.get('quotation')})
             if order_lines:
-                print("order_linessss->",order_lines)
+                # print("order_linessss->",order_lines)
                 sale.update({'order_line': order_lines})
             if product_lines:
-                print("product_lines->", product_lines)
+                # print("product_lines->", product_lines)
                 sale.update({'product_ids': product_lines})
         return request.redirect('my/orders#')
 
@@ -600,7 +600,7 @@ class PortalSaleOrder(http.Controller):
             ('partner_id.parent_id', '=', request.env.user.partner_id.parent_id.id),
             ('move_type', '=', 'out_invoice')
         ])
-        print("invoices->", invoices)
+        # print("invoices->", invoices)
         if invoices:
             csv_data = StringIO()
             csv_writer = csv.writer(csv_data)

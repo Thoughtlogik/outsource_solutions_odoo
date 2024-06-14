@@ -3,7 +3,7 @@
     'name': 'Portal Orders',
     'version': '0.1',
     'summary': 'Portal Orders',
-    'depends': ['sale','crm','portal'],
+    'depends': ['sale_management','hr','product','sale','crm','portal'],
 
     'data': [
         'security/ir.model.access.csv',
