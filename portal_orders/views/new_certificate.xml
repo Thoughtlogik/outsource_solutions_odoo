@@ -187,28 +187,28 @@
                                                 <td id="product_name">
                                                     <t t-out="line.name"/>
                                                 </td>
-                                                <t t-if="line.test_result_type == 'pass_fail'">
-                                                    <td class="text-end" id="result_pass_fail">
-                                                        <div id="result_pass_fail">
-                                                            <t t-out="line.result_pass_fail or ''"/>
-                                                        </div>
-                                                    </td>
-                                                    <td></td>
-                                                    <td></td>
-                                                </t>
-                                                <t t-if="line.test_result_type == 'numerical'">
-                                                    <td></td>
-                                                    <td class="text-end" id="test_result_td">
-                                                        <div id="test_result">
-                                                            <t t-out="line.test_result_nu or ''"/>
-                                                        </div>
-                                                    </td>
-                                                    <td class="text-end" id="test_result_unit_td">
-                                                        <div id="test_result_unit">
-                                                            <t t-out="line.test_result_unit or ''"/>
-                                                        </div>
-                                                    </td>
-                                                </t>
+                                                <!--<t t-if="line.test_result_type == 'pass_fail'">-->
+                                                <td class="text-end" id="result_pass_fail">
+                                                    <div id="result_pass_fail">
+                                                        <t t-out="line.result_pass_fail or ''"/>
+                                                    </div>
+                                                </td>
+                                               <!-- <td></td>
+                                                <td></td>-->
+                                                <!--</t>-->
+                                                <!--<t t-if="line.test_result_type == 'numerical'">-->
+                                                <!--<td></td>-->
+                                                <td class="text-end" id="test_result_td">
+                                                    <div id="test_result">
+                                                        <t t-out="line.test_result_nu or ''"/>
+                                                    </div>
+                                                </td>
+                                                <td class="text-end" id="test_result_unit_td">
+                                                    <div id="test_result_unit">
+                                                        <t t-out="line.test_result_unit or ''"/>
+                                                    </div>
+                                                </td>
+                                                <!--</t>-->
                                             </t>
                                             <t t-if="line.display_type == 'line_section'">
                                                 <td colspan="4">
@@ -259,3 +259,297 @@
         </template>
     </data>
 </odoo>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<?xml version="1.0"?>-->
+<!--<odoo>
+    <data>
+        <template id="certification_test_report_template">
+            <t t-call="web.html_container">
+                <t t-set="current_date" t-value="datetime.datetime.now().strftime('%m/%d/%Y')"/>
+                <t t-foreach="docs" t-as="o">
+                    &lt;!&ndash;                    <t t-call="web.external_layout">&ndash;&gt;
+                    <t t-name="portal_orders.certification_test_report_template">
+                        <div class="page">
+                            <style>
+                                &lt;!&ndash;                                body {&ndash;&gt;
+                                &lt;!&ndash;                                font-family: Arial, sans-serif;&ndash;&gt;
+                                &lt;!&ndash;                                line-height: 1.6;&ndash;&gt;
+                                &lt;!&ndash;                                margin: 0;&ndash;&gt;
+                                &lt;!&ndash;                                padding: 0;&ndash;&gt;
+                                &lt;!&ndash;                                background-color: #f4f4f4;&ndash;&gt;
+                                &lt;!&ndash;                                }&ndash;&gt;
+
+                                &lt;!&ndash;                                .container {&ndash;&gt;
+                                &lt;!&ndash;                                max-width: 800px;&ndash;&gt;
+                                &lt;!&ndash;                                margin: 20px auto;&ndash;&gt;
+                                &lt;!&ndash;                                padding: 20px;&ndash;&gt;
+                                &lt;!&ndash;                                background: #fff;&ndash;&gt;
+                                &lt;!&ndash;                                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);&ndash;&gt;
+                                &lt;!&ndash;                                }&ndash;&gt;
+
+                                table {
+                                width: 80%;
+                                margin: 20px auto;
+                                border: 1px solid;
+                                border-collapse: collapse;
+                                }
+
+                                td, th {
+                                border: 1px solid;
+                                padding: 8px;
+                                text-align: left;
+                                }
+
+                                th {
+                                text-align: center;
+                                }
+
+                                .size {
+                                height: 5px;
+                                }
+
+                                td {
+                                height: 20px;
+                                }
+
+                                .row {
+                                height: 100px;
+                                width: 600px;
+                                margin-left: 0px;
+                                }
+                                .myDiv {
+                                border: 5px outset #ADD8E6;
+                                }
+                                footer {
+                                font-size: 0.9em;
+                                text-align: center;
+                                }
+
+                                footer p {
+                                margin: 5px 0;
+                                }
+
+                                .logo-container {
+                                margin: 0;
+                                padding: 0;
+                                text-align: center;
+                                }
+                                .logo-container img {
+                                height: 150px;
+                                }
+
+                            </style>
+
+                            &lt;!&ndash;                            <div class="container">&ndash;&gt;
+                            &lt;!&ndash;                                <header>&ndash;&gt;
+                            <center>
+                                <div class="logo-container">
+                                    <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)"
+                                         alt="Logo"/>
+                                </div>
+                            </center>
+                            <p align="right">Test Report</p>
+                            &lt;!&ndash;                                </header>&ndash;&gt;
+                            <div class="myDiv"></div>
+                            <table style="width:80%" align="center">
+                                <tr>
+                                    <td rowspan="3" style="text-align:left;">
+                                        <t t-esc="o.partner_id.name"/>
+                                        <br/>
+                                        <t t-out="o.partner_id.street"/>
+                                        <br/>
+                                        <t t-out="o.partner_id.city"/>
+                                        <br/>
+                                        <t t-out="o.partner_id.state_id.name"/>
+                                        <br/>
+                                        <t t-out="o.partner_id.zip"/>
+                                        <br/>
+                                    </td>
+                                    <td colspan="3" style="text-align:left;">
+                                        Sample Delivery Date.
+                                        <br/>
+                                        <t t-if="o.sample_delivery_date">
+                                            <t t-out="o.sample_delivery_date.strftime('%m/%d/%Y')"/>
+                                        </t>
+                                        <t t-if="not o.sample_delivery_date">
+                                            <t t-esc="''"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="text-align:left;">
+                                        Sample Start Date.
+                                        <br/>
+                                        <t t-if="o.sample_start_date">
+                                            <t t-out="o.sample_start_date.strftime('%m/%d/%Y')"/>
+                                        </t>
+                                        <t t-if="not o.sample_start_date">
+                                            <t t-esc="''"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                                <tr style="text-align:left;">
+                                    <td colspan="3">
+                                        Analysis Completed
+                                        <br/>
+                                        <t t-if="o.analysis_finish">
+                                            <t t-out="o.analysis_finish.strftime('%m/%d/%Y %H:%M:%S')"/>
+                                        </t>
+                                        <t t-if="not o.analysis_finish">
+                                            <t t-esc="''"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <span>
+                                <center>
+                                    Date Of Result :
+                                    <t t-out="o.date_of_result"/>
+                                </center>
+                            </span>
+
+                            <table style="width:80%" align="center">
+                                <tr>
+                                    <th style="width:10px; text-align:left;">OSL<br/>Sample<br/>number
+                                    </th>
+                                    &lt;!&ndash;                                    <th style="width:10px; text-align:left;">Date of result</th>&ndash;&gt;
+                                    <th style="text-align:left;">Product Description</th>
+                                </tr>
+                                <t t-set="lines_to_report_new" t-value="o.product_ids"/>
+                                <t t-foreach="lines_to_report_new" t-as="new">
+                                    <t t-if="new.sequence">
+                                        <tr>
+                                            <td>
+                                                <t t-out="new.sequence"/>
+                                            </td>
+                                            &lt;!&ndash;                                            <td>&ndash;&gt;
+                                            &lt;!&ndash;                                                <t t-out="o.date_of_result"/>&ndash;&gt;
+                                            &lt;!&ndash;                                            </td>&ndash;&gt;
+                                            <td style="width:700px;">
+                                                <t t-out="new.product_description"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </t>
+                            </table>
+
+                            <table style="width:80%" align="center">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:left;">Test</th>
+                                        <th style="text-align:left;">Pass/Fail</th>
+                                        <th style="width:50px; text-align:left;">Result</th>
+                                        <th style="width:50px; text-align:left;">Units</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="sale_tbody">
+                                    <t t-set="lines_to_report" t-value="o.order_line"/>
+                                    <t t-foreach="lines_to_report" t-as="line">
+                                        <tr t-att-class="'bg-200 fw-bold o_line_section' if line.display_type == 'line_section' else 'fst-italic o_line_note' if line.display_type == 'line_note' else ''">
+                                            <t t-if="not line.display_type">
+                                                <td id="product_name">
+                                                    <t t-out="line.name"/>
+                                                </td>
+                                                <t t-if="line.test_result_type == 'pass_fail'">
+                                                    <td class="text-end" id="result_pass_fail">
+                                                        <div id="result_pass_fail">
+                                                            <t t-out="line.result_pass_fail or ''"/>
+                                                        </div>
+                                                    </td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </t>
+                                                <t t-else = "">
+                                                    <td></td>
+                                                </t>
+                                                <t t-if="line.test_result_type == 'numerical'">
+                                                    <td></td>
+                                                    <td class="text-end" id="test_result_td">
+                                                        <div id="test_result">
+                                                            <t t-out="line.test_result_nu or ''"/>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-end" id="test_result_unit_td">
+                                                        <div id="test_result_unit">
+                                                            <t t-out="line.test_result_unit or ''"/>
+                                                        </div>
+                                                    </td>
+                                                </t>
+                                                <t t-else = "">
+                                                    <td></td>
+                                                    <td></td>
+                                                </t>
+                                            </t>
+                                            <t t-if="line.display_type == 'line_section'">
+                                                <td colspan="4">
+                                                    <span t-field="line.name"/>
+                                                </td>
+                                            </t>
+                                            <t t-if="line.display_type == 'line_note'">
+                                                <td colspan="4">
+                                                    <span t-field="line.name"/>
+                                                </td>
+                                            </t>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+
+                            <table style="width:80%" align="center">
+                                <tr>
+                                    <th style="width:50px; text-align:left;">Laboratory Manager</th>
+                                    <th style="width:50px; text-align:left;">Duncan Perry B.Sc(HON), FIFST</th>
+                                    <th style="width:50px; text-align:left;">
+                                        <t t-if="o.signature">
+                                            <img t-att-src="image_data_uri(o.signature)"
+                                                 style="max-height: 6rem; max-width: 100%;" alt="Signature"/>
+                                        </t>
+                                    </th>
+                                    <th style="width:50px; text-align:left;">Date:
+                                        <t t-esc="current_date"/>
+                                    </th>
+                                </tr>
+                            </table>
+
+                            <footer>
+                                <p>Outsource Laboratory Ltd, Unit 9 Newark Road North, Eastfield Industrial Estate,
+                                    Glenrothes, Fife KY7 4NT
+                                </p>
+                            </footer>
+
+
+                        </div>
+
+                    </t>
+                </t>
+            </t>
+
+        </template>
+    </data>
+</odoo>-->
+
+
+
+
+
+
+
+
+
+
+

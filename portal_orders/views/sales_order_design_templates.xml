@@ -806,7 +806,16 @@
                                 <!-- Modal HTML -->
                                 <div id="testModal" class="modal">
                                     <div class="modal-content">
-                                        <span class="close"></span>
+                                        <button type="button" style="border-radius: 10px; border-color: #dc3545; background-color: #dc3545; width: 40px; margin-left: 95%" class="closepopupnew"
+                                                onclick="myFunction()">
+                                            <i class="fa fa-window-close-o" style="color: white;"></i>
+                                        </button>
+                                        <script>
+                                            function myFunction() {
+                                            var popup = document.getElementById(`testModal`)
+                                            popup.style.display = "none";
+                                            }
+                                        </script>
                                         <!--<p>Product Name:<span id="modalProductName"></span></p>-->
                                         <table class="table">
                                             <thead>
@@ -1050,19 +1059,19 @@
                                     width: 80%;
                                     }
 
-                                    .close {
+                                    <!--.close {
                                     color: #aaa;
                                     float: right;
                                     font-size: 28px;
                                     font-weight: bold;
-                                    }
+                                    }-->
 
-                                    .close:hover,
+                                    <!--.close:hover,
                                     .close:focus {
                                     color: black;
                                     text-decoration: none;
                                     cursor: pointer;
-                                    }
+                                    }-->
                                 </style>
 
                                 <div class="card-body">
@@ -1225,7 +1234,7 @@
 
                                                             function showTestModal(row_id) {
                                                             var modal = document.getElementById("testModal");
-                                                            var span = document.getElementsByClassName("close")[0];
+                                                            <!--                                                            var span = document.getElementsByClassName("close")[0];-->
 
                                                             // Retrieve the product name for the specific row
                                                             var productName =
@@ -1237,9 +1246,9 @@
 
                                                             modal.style.display = "block";
 
-                                                            span.onclick = function () {
+                                                            <!--span.onclick = function () {
                                                             modal.style.display = "none";
-                                                            }
+                                                            }-->
 
                                                             window.onclick = function (event) {
                                                             if (event.target == modal) {
