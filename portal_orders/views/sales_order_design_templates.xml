@@ -839,7 +839,7 @@
                                         </table>
                                         <div>
                                             <button type="button" class="btn btn-primary" id="new-add-line-btn"
-                                                    onclick="new_addLine()">Add a Line
+                                                    onclick="new_addLine()">Add a Test
                                             </button>
                                         </div>
                                     </div>
@@ -1127,7 +1127,7 @@
                                                                 </table>
                                                             </div>
                                                             <button type="button" class="btn btn-primary"
-                                                                    id="add-line-btn" onclick="addLine()">Add a Line
+                                                                    id="add-line-btn" onclick="addLine()">Add a Sample
                                                             </button>
                                                         </div>
 
