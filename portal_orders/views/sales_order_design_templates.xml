@@ -896,7 +896,7 @@
                                             </input>
                                         </td>
                                         <td>
-                                            <input type="Float" name="price_unit_${row_id}"
+                                            <input type="Float" name="price_unit_${row_id}" readonly="readonly"
                                                    id="new_price_unit_${row_id}" class="form-control"
                                                    onchange="new_onUnitPrice(this.value, ${row_id})"/>
                                         </td>
@@ -945,11 +945,11 @@
                                                    class="form-control" value="20" disabled="disabled"/>
                                         </td>-->
                                         <td>
-                                            <input type="Float" name="discount_${row_id}" id="newdiscount_${row_id}"
+                                            <input type="Float" name="discount_${row_id}" id="newdiscount_${row_id}" readonly="readonly"
                                                    class="form-control" onchange="new_discountLine(${row_id})"/>
                                         </td>
                                         <td>
-                                            <input type="Float" name="price_subtotal_${row_id}"
+                                            <input type="Float" name="price_subtotal_${row_id}" readonly="readonly"
                                                    id="new_subtotal_${row_id}" class="form-control"/>
                                         </td>
                                         <td>
